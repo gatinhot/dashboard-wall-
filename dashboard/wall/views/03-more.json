@@ -1,0 +1,189 @@
+{
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "cards": [
+  {
+   "template": "wm_page_title",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:view-grid-outline",
+    "subtitle": "House modes, cameras and the rest of the house",
+    "title": "More"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Modes"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "input_boolean.night_mode",
+   "template": "wm_mode_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:weather-night",
+    "title": "Night mode"
+   }
+  },
+  {
+   "entity": "input_boolean.guest_mode",
+   "template": "wm_mode_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:account-multiple-outline",
+    "title": "Guest mode"
+   }
+  },
+  {
+   "entity": "vacuum.justin",
+   "tap_action": {
+    "action": "navigate",
+    "haptic": "light",
+    "navigation_path": "/11-west-mead-wall-beta/vacuums"
+   },
+   "template": "wm_hub_tile",
+   "triggers_update": [
+    "vacuum.mini_robot_vacuum_k10"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:robot-vacuum",
+    "sub": "[[[ const v = [['Justin', 'vacuum.justin'], ['Cindy', 'vacuum.mini_robot_vacuum_k10']].map(x => [x[0], states[x[1]]?.state]); const busy = v.filter(x => x[1] === 'cleaning'); const bad = v.filter(x => ['error', 'unavailable'].includes(x[1])); return bad.length ? `${bad[0][0]} needs attention` : busy.length ? `${busy.map(x => x[0]).join(' and ')} cleaning` : 'Both docked'; ]]]",
+    "title": "Robot vacuums",
+    "tone": "[[[ const s = ['vacuum.justin', 'vacuum.mini_robot_vacuum_k10'].map(i => states[i]?.state); return s.some(x => ['error', 'unavailable'].includes(x)) ? 'coral' : s.includes('cleaning') ? 'mint' : s.some(x => ['returning', 'paused'].includes(x)) ? 'peach' : 'none'; ]]]"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_hub_tile",
+   "entity": "light.all_house_lights",
+   "triggers_update": [
+    "light.living_room_lights_all",
+    "light.kitchen_lights_all",
+    "light.bedroom_lights_all",
+    "light.bathroom_lights",
+    "light.office_lights_all",
+    "light.anexo_lights_all",
+    "light.storage_lights_all",
+    "light.garden_lights_all",
+    "light.lights_shed_all",
+    "input_boolean.lights_include_outside"
+   ],
+   "variables": {
+    "title": "All lights off",
+    "icon": "mdi:lightbulb-off-outline",
+    "sub": "[[[ const rg = ['light.living_room_lights_all', 'light.kitchen_lights_all', 'light.bedroom_lights_all', 'light.bathroom_lights', 'light.office_lights_all', 'light.anexo_lights_all', 'light.storage_lights_all']; const og = ['light.garden_lights_all', 'light.lights_shed_all']; const groups = states['input_boolean.lights_include_outside']?.state === 'off' ? rg : rg.concat(og); const seen = new Set(); const walk = id => { if (seen.has(id)) return; seen.add(id); (states[id]?.attributes?.entity_id || []).forEach(walk); }; groups.forEach(walk); const n = [...seen].filter(id => !states[id]?.attributes?.entity_id && states[id]?.state === 'on').length; return n ? `${n} light${n > 1 ? 's' : ''} on` : 'Everything is off'; ]]]",
+    "tone": "[[[ const rg = ['light.living_room_lights_all', 'light.kitchen_lights_all', 'light.bedroom_lights_all', 'light.bathroom_lights', 'light.office_lights_all', 'light.anexo_lights_all', 'light.storage_lights_all']; const og = ['light.garden_lights_all', 'light.lights_shed_all']; const groups = states['input_boolean.lights_include_outside']?.state === 'off' ? rg : rg.concat(og); const seen = new Set(); const walk = id => { if (seen.has(id)) return; seen.add(id); (states[id]?.attributes?.entity_id || []).forEach(walk); }; groups.forEach(walk); const n = [...seen].filter(id => !states[id]?.attributes?.entity_id && states[id]?.state === 'on').length; return n ? 'gold' : 'none'; ]]]"
+   },
+   "tap_action": {
+    "action": "perform-action",
+    "perform_action": "light.turn_off",
+    "target": {
+     "entity_id": "[[[ const rg = ['light.living_room_lights_all', 'light.kitchen_lights_all', 'light.bedroom_lights_all', 'light.bathroom_lights', 'light.office_lights_all', 'light.anexo_lights_all', 'light.storage_lights_all']; const og = ['light.garden_lights_all', 'light.lights_shed_all']; const groups = states['input_boolean.lights_include_outside']?.state === 'off' ? rg : rg.concat(og); return groups; ]]]"
+    },
+    "haptic": "medium"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Go to"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "alarm_control_panel.office",
+   "tap_action": {
+    "action": "navigate",
+    "haptic": "light",
+    "navigation_path": "/11-west-mead-wall-beta/safety"
+   },
+   "template": "wm_hub_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:shield-outline",
+    "sub": "[[[ const s = entity ? entity.state : 'unavailable'; return { disarmed: 'Disarmed', armed_home: 'Armed · Home', armed_away: 'Armed · Away', armed_night: 'Armed · Night', arming: 'Arming…', pending: 'Entry delay', triggered: 'Alarm triggered' }[s] || 'Unavailable'; ]]]",
+    "title": "Security",
+    "tone": "[[[ const s = entity ? entity.state : 'unavailable'; return s.startsWith('armed') ? 'mint' : ['arming', 'pending'].includes(s) ? 'peach' : s === 'disarmed' ? 'none' : 'coral'; ]]]"
+   }
+  },
+  {
+   "entity": "climate.living_room",
+   "tap_action": {
+    "action": "navigate",
+    "haptic": "light",
+    "navigation_path": "/11-west-mead-wall-beta/climate"
+   },
+   "template": "wm_hub_tile",
+   "triggers_update": [
+    "climate.office_ac"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:home-thermometer-outline",
+    "sub": "[[[ const act = (s => s ? (s.attributes.hvac_action || ({heat: 'heating', cool: 'cooling', dry: 'drying', fan_only: 'fan', heat_cool: 'auto', auto: 'auto'})[s.state] || null) : null); const a = ['climate.living_room', 'climate.office_ac'].map(i => act(states[i])); const l = states['climate.living_room']; const t = l ? parseFloat(l.attributes.current_temperature) : NaN; return a.includes('heating') ? 'Heating is on' : a.includes('cooling') ? 'Cooling is on' : a.some(x => ['auto', 'drying', 'fan'].includes(x)) ? 'Office AC is on' : isNaN(t) ? 'Heating and AC' : `Living room ${t.toFixed(1)}°`; ]]]",
+    "title": "Climate",
+    "tone": "[[[ const act = (s => s ? (s.attributes.hvac_action || ({heat: 'heating', cool: 'cooling', dry: 'drying', fan_only: 'fan', heat_cool: 'auto', auto: 'auto'})[s.state] || null) : null); const a = ['climate.living_room', 'climate.office_ac'].map(i => act(states[i])); return a.includes('heating') ? 'coral' : a.some(x => ['cooling', 'auto', 'drying', 'fan'].includes(x)) ? 'mint' : 'none'; ]]]"
+   }
+  },
+  {
+   "entity": "sensor.shelly_main_power_meter_channel_1_power",
+   "tap_action": {
+    "action": "navigate",
+    "haptic": "light",
+    "navigation_path": "/11-west-mead-wall-beta/energy"
+   },
+   "template": "wm_hub_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:leaf",
+    "sub": "[[[ const v = parseFloat(entity?.state); return isNaN(v) ? 'Live usage' : v >= 1000 ? `${(v / 1000).toFixed(2)} kW now` : `${Math.round(v)} W now`; ]]]",
+    "title": "Energy",
+    "tone": "[[[ const v = parseFloat(entity?.state); const hi = parseFloat(states['input_number.energy_high_usage_from']?.state); return !isNaN(v) && !isNaN(hi) && v >= hi ? 'peach' : 'none'; ]]]"
+   }
+  },
+  {
+   "tap_action": {
+    "action": "navigate",
+    "haptic": "light",
+    "navigation_path": "/11-west-mead/automations"
+   },
+   "template": "wm_hub_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:robot-outline",
+    "sub": "Master switches by type",
+    "title": "Automations"
+   }
+  },
+  {
+   "template": "wm_nav",
+   "type": "custom:button-card",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ],
+ "icon": "mdi:view-grid-outline",
+ "layout": {
+  "grid-gap": "16px",
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "height": "auto",
+  "margin": 0,
+  "padding": "44px 40px 140px",
+  "place-content": "start center"
+ },
+ "path": "more",
+ "title": "More",
+ "type": "custom:grid-layout"
+}

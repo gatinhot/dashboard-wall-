@@ -1,0 +1,515 @@
+{
+ "title": "Home",
+ "path": "home",
+ "icon": "mdi:home-outline",
+ "type": "custom:grid-layout",
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "layout": {
+  "grid-template-columns": "minmax(0, 640px)",
+  "grid-template-areas": "\"header\" \"greet\" \"quick\" \"tabs\" \"rooms\" \"nav\"",
+  "grid-template-rows": "auto auto auto 56px minmax(548px, auto) 70px",
+  "grid-gap": "20px",
+  "padding": "40px 40px 40px",
+  "margin": 0,
+  "place-content": "start center",
+  "height": "auto"
+ },
+ "cards": [
+  {
+   "type": "custom:button-card",
+   "template": "wm_header",
+   "view_layout": {
+    "grid-area": "header"
+   },
+   "triggers_update": [
+    "weather.forecast_t_c_homeassistant",
+    "sensor.date"
+   ]
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_greeting",
+   "view_layout": {
+    "grid-area": "greet"
+   }
+  },
+  {
+   "type": "horizontal-stack",
+   "view_layout": {
+    "grid-area": "quick"
+   },
+   "cards": [
+    {
+     "type": "custom:button-card",
+     "template": "wm_quick",
+     "entity": "sensor.shelly_main_power_meter_channel_1_power",
+     "name": "Energy",
+     "triggers_update": [
+      "input_number.energy_high_usage_from"
+     ],
+     "variables": {
+      "icon": "mdi:leaf",
+      "role": "[[[ const lim = parseFloat(states['input_number.energy_high_usage_from']?.state);\n    const v = parseFloat(entity?.state);\n    return (!isNaN(lim) && v >= lim) ? 'peach' : 'none'; ]]]\n"
+     },
+     "tap_action": {
+      "action": "navigate",
+      "navigation_path": "/11-west-mead-wall-beta/energy"
+     }
+    },
+    {
+     "entity": "climate.living_room",
+     "name": "Climate",
+     "tap_action": {
+      "action": "navigate",
+      "haptic": "light",
+      "navigation_path": "/11-west-mead-wall-beta/climate"
+     },
+     "template": "wm_quick",
+     "triggers_update": [
+      "climate.office_ac"
+     ],
+     "type": "custom:button-card",
+     "variables": {
+      "icon": "mdi:home-thermometer-outline",
+      "role": "[[[ const act = (s => s ? (s.attributes.hvac_action || ({heat: 'heating', cool: 'cooling', dry: 'drying', fan_only: 'fan', heat_cool: 'auto', auto: 'auto'})[s.state] || null) : null); const a = ['climate.living_room', 'climate.office_ac'].map(i => act(states[i])); return a.includes('heating') ? 'coral' : a.some(x => ['cooling', 'auto', 'drying', 'fan'].includes(x)) ? 'mint' : 'none'; ]]]"
+     }
+    },
+    {
+     "type": "custom:button-card",
+     "template": "wm_quick",
+     "entity": "sensor.wr67xfs_lock",
+     "name": "Car",
+     "triggers_update": [
+      "sensor.wr67xfs_fuel_level"
+     ],
+     "variables": {
+      "icon": "mdi:car-outline",
+      "badge": "[[[ const locked = ['1', '2'].includes(entity?.state);\n    const fuel = parseFloat(states['sensor.wr67xfs_fuel_level']?.state);\n    return !locked ? 'coral' : (!isNaN(fuel) && fuel < 15) ? 'peach' : 'none'; ]]]\n"
+     },
+     "tap_action": {
+      "action": "navigate",
+      "navigation_path": "/11-west-mead-wall-beta/safety"
+     }
+    },
+    {
+     "type": "custom:button-card",
+     "template": "wm_quick",
+     "entity": "light.all_house_lights",
+     "name": "Lights",
+     "variables": {
+      "icon": "mdi:lightbulb-outline",
+      "role": "[[[ const rg = ['light.living_room_lights_all', 'light.kitchen_lights_all', 'light.bedroom_lights_all', 'light.bathroom_lights', 'light.office_lights_all', 'light.anexo_lights_all', 'light.storage_lights_all']; const og = ['light.garden_lights_all', 'light.lights_shed_all']; const groups = states['input_boolean.lights_include_outside']?.state === 'off' ? rg : rg.concat(og); const seen = new Set(); const walk = id => { if (seen.has(id)) return; seen.add(id); (states[id]?.attributes?.entity_id || []).forEach(walk); }; groups.forEach(walk); const n = [...seen].filter(id => !states[id]?.attributes?.entity_id && states[id]?.state === 'on').length; return n ? 'gold' : 'none'; ]]]"
+     },
+     "tap_action": {
+      "action": "navigate",
+      "navigation_path": "/11-west-mead-wall-beta/lights",
+      "haptic": "light"
+     },
+     "triggers_update": [
+      "light.living_room_lights_all",
+      "light.kitchen_lights_all",
+      "light.bedroom_lights_all",
+      "light.bathroom_lights",
+      "light.office_lights_all",
+      "light.anexo_lights_all",
+      "light.storage_lights_all",
+      "light.garden_lights_all",
+      "light.lights_shed_all",
+      "input_boolean.lights_include_outside"
+     ],
+     "double_tap_action": {
+      "action": "perform-action",
+      "perform_action": "light.turn_off",
+      "target": {
+       "entity_id": "[[[ const rg = ['light.living_room_lights_all', 'light.kitchen_lights_all', 'light.bedroom_lights_all', 'light.bathroom_lights', 'light.office_lights_all', 'light.anexo_lights_all', 'light.storage_lights_all']; const og = ['light.garden_lights_all', 'light.lights_shed_all']; const groups = states['input_boolean.lights_include_outside']?.state === 'off' ? rg : rg.concat(og); return groups; ]]]"
+      },
+      "haptic": "heavy"
+     }
+    }
+   ]
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_tabs",
+   "view_layout": {
+    "grid-area": "tabs"
+   }
+  },
+  {
+   "type": "conditional",
+   "view_layout": {
+    "grid-area": "rooms"
+   },
+   "conditions": [
+    {
+     "condition": "state",
+     "entity": "input_select.dash_floor",
+     "state": "Ground"
+    }
+   ],
+   "card": {
+    "type": "custom:layout-card",
+    "layout_type": "custom:grid-layout",
+    "layout": {
+     "grid-template-columns": "1fr 1fr",
+     "grid-gap": "16px",
+     "margin": 0,
+     "padding": 0
+    },
+    "cards": [
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.living_room_lights_all",
+       "sensor.living_room_temperature",
+       "climate.living_room"
+      ],
+      "variables": {
+       "name": "Living room",
+       "icon": "mdi:sofa-outline",
+       "light": "light.living_room_lights_all",
+       "media": "media_player.living_room_sonos_2",
+       "temp": "sensor.living_room_temperature",
+       "climate": "climate.living_room",
+       "cover": "cover.living_room_curtains",
+       "page": "room-living-room"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.kitchen_lights_all",
+       "sensor.kitchen_presence_multi_sensor_fp300_testing_temperature"
+      ],
+      "variables": {
+       "name": "Kitchen",
+       "icon": "mdi:pot-steam-outline",
+       "light": "light.kitchen_lights_all",
+       "media": "media_player.kitchen_display_2",
+       "temp": "sensor.kitchen_presence_multi_sensor_fp300_testing_temperature",
+       "cover": "cover.kitchen_curtains",
+       "page": "room-kitchen"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.hallway_lights_all",
+       "sensor.hallway_temperature"
+      ],
+      "variables": {
+       "name": "Hallway",
+       "icon": "mdi:door",
+       "light": "light.hallway_lights_all",
+       "media": "media_player.hallway_speaker",
+       "temp": "sensor.hallway_temperature",
+       "cover": "cover.hallway_curtains",
+       "page": "room-hallway"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.dining_room_lights_all",
+       "sensor.dining_room_temperature"
+      ],
+      "variables": {
+       "name": "Dining room",
+       "icon": "mdi:table-chair",
+       "light": "light.dining_room_lights_all",
+       "media": "media_player.dining_room_speaker",
+       "temp": "sensor.dining_room_temperature",
+       "cover": "cover.dining_room_curtains",
+       "page": "room-dining-room"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.toilet_lights_all",
+       "sensor.toilet_temperature"
+      ],
+      "variables": {
+       "name": "Toilet",
+       "icon": "mdi:toilet",
+       "light": "light.toilet_lights_all",
+       "media": "media_player.toilet_speaker",
+       "temp": "sensor.toilet_temperature",
+       "cover": "cover.toilet_curtains",
+       "page": "room-toilet"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.laundry_lights_all",
+       "sensor.laundry_temperature",
+       "sensor.washerdryer_state"
+      ],
+      "variables": {
+       "name": "Laundry",
+       "icon": "mdi:washing-machine",
+       "light": "light.laundry_lights_all",
+       "media": "media_player.laundry_speaker",
+       "temp": "sensor.laundry_temperature",
+       "process": "sensor.washerdryer_state",
+       "cover": "cover.laundry_curtains",
+       "page": "room-laundry"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "type": "conditional",
+   "view_layout": {
+    "grid-area": "rooms"
+   },
+   "conditions": [
+    {
+     "condition": "state",
+     "entity": "input_select.dash_floor",
+     "state": "First"
+    }
+   ],
+   "card": {
+    "type": "custom:layout-card",
+    "layout_type": "custom:grid-layout",
+    "layout": {
+     "grid-template-columns": "1fr 1fr",
+     "grid-gap": "16px",
+     "margin": 0,
+     "padding": 0
+    },
+    "cards": [
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.bedroom_lights_all",
+       "sensor.dehumidifier_a54e_temperature",
+       "climate.bedroom"
+      ],
+      "variables": {
+       "name": "Bedroom",
+       "icon": "mdi:bed-king-outline",
+       "light": "light.bedroom_lights_all",
+       "media": "media_player.bedroom_speaker_2",
+       "temp": "sensor.dehumidifier_a54e_temperature",
+       "climate": "climate.bedroom",
+       "cover": "cover.bedroom_curtains",
+       "page": "room-bedroom"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.bedroom_guest_lights_all",
+       "sensor.bedroom_guest_temperature"
+      ],
+      "variables": {
+       "name": "Guest bedroom",
+       "icon": "mdi:bed-outline",
+       "light": "light.bedroom_guest_lights_all",
+       "media": "media_player.bedroom_guest_speaker",
+       "temp": "sensor.bedroom_guest_temperature",
+       "cover": "cover.bedroom_guest_curtains",
+       "page": "room-guest-bedroom"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.bathroom_lights",
+       "sensor.bathroom_temperature"
+      ],
+      "variables": {
+       "name": "Bathroom",
+       "icon": "mdi:shower",
+       "light": "light.bathroom_lights",
+       "media": "media_player.bathroom_speaker",
+       "temp": "sensor.bathroom_temperature",
+       "cover": "cover.bathroom_curtains",
+       "page": "room-bathroom"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.upstairs_landing_lights_all",
+       "sensor.upstairs_landing_temperature"
+      ],
+      "variables": {
+       "name": "Landing",
+       "icon": "mdi:stairs",
+       "light": "light.upstairs_landing_lights_all",
+       "media": "media_player.upstairs_landing_speaker",
+       "temp": "sensor.upstairs_landing_temperature",
+       "cover": "cover.upstairs_landing_curtains",
+       "page": "room-landing"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.walk_in_wardrobe_lights_all",
+       "sensor.walk_in_wardrobe_temperature"
+      ],
+      "variables": {
+       "name": "Wardrobe",
+       "icon": "mdi:wardrobe-outline",
+       "light": "light.walk_in_wardrobe_lights_all",
+       "media": "media_player.walk_in_wardrobe_speaker",
+       "temp": "sensor.walk_in_wardrobe_temperature",
+       "cover": "cover.walk_in_wardrobe_curtains",
+       "page": "room-wardrobe"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "type": "conditional",
+   "view_layout": {
+    "grid-area": "rooms"
+   },
+   "conditions": [
+    {
+     "condition": "state",
+     "entity": "input_select.dash_floor",
+     "state": "Outside"
+    }
+   ],
+   "card": {
+    "type": "custom:layout-card",
+    "layout_type": "custom:grid-layout",
+    "layout": {
+     "grid-template-columns": "1fr 1fr",
+     "grid-gap": "16px",
+     "margin": 0,
+     "padding": 0
+    },
+    "cards": [
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.alleyway_floodlight",
+       "weather.forecast_t_c_homeassistant"
+      ],
+      "variables": {
+       "name": "Driveway",
+       "icon": "mdi:road-variant",
+       "light": "light.alleyway_floodlight",
+       "media": "media_player.drive_speaker",
+       "temp": "weather.forecast_t_c_homeassistant",
+       "page": "room-driveway"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.garden_lights_all",
+       "weather.forecast_t_c_homeassistant"
+      ],
+      "variables": {
+       "name": "Garden",
+       "icon": "mdi:flower-outline",
+       "light": "light.garden_lights_all",
+       "media": "media_player.garden_speaker_moode_upnp",
+       "temp": "weather.forecast_t_c_homeassistant",
+       "page": "room-garden"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.lights_shed_all",
+       "sensor.shed_temperature"
+      ],
+      "variables": {
+       "name": "Shed",
+       "icon": "mdi:greenhouse",
+       "light": "light.lights_shed_all",
+       "media": "media_player.shed_speaker",
+       "temp": "sensor.shed_temperature",
+       "page": "room-shed"
+      }
+     },
+     {
+      "type": "custom:button-card",
+      "template": "wm_room",
+      "triggers_update": [
+       "light.office_lights_all",
+       "sensor.office_temperature",
+       "climate.office_ac"
+      ],
+      "variables": {
+       "name": "Office one",
+       "icon": "mdi:desktop-tower-monitor",
+       "light": "light.office_lights_all",
+       "media": "media_player.office_speaker_2",
+       "temp": "sensor.office_temperature",
+       "climate": "climate.office_ac",
+       "cover": "cover.office_curtains",
+       "page": "room-office-one"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "template": "wm_nav",
+   "type": "custom:button-card",
+   "view_layout": {
+    "grid-area": "nav"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_now_playing",
+   "triggers_update": [
+    "media_player.living_room_sonos_2",
+    "media_player.whole_house_speakers_2",
+    "media_player.living_room_speaker_2",
+    "media_player.kitchen_display_2",
+    "media_player.bedroom_speaker_2",
+    "media_player.office_speaker_2",
+    "media_player.garden_speaker_moode_upnp",
+    "sensor.time"
+   ],
+   "variables": {
+    "players": [
+     "media_player.living_room_sonos_2",
+     "media_player.whole_house_speakers_2",
+     "media_player.living_room_speaker_2",
+     "media_player.kitchen_display_2",
+     "media_player.bedroom_speaker_2",
+     "media_player.office_speaker_2",
+     "media_player.garden_speaker_moode_upnp"
+    ],
+    "names": {
+     "media_player.living_room_sonos_2": "Living room Sonos",
+     "media_player.whole_house_speakers_2": "Whole house",
+     "media_player.living_room_speaker_2": "Living room speaker",
+     "media_player.kitchen_display_2": "Kitchen display",
+     "media_player.bedroom_speaker_2": "Bedroom speaker",
+     "media_player.office_speaker_2": "Office speaker",
+     "media_player.garden_speaker_moode_upnp": "Garden speaker"
+    }
+   }
+  }
+ ]
+}

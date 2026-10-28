@@ -1,0 +1,391 @@
+{
+ "title": "Lights",
+ "path": "lights",
+ "icon": "mdi:lightbulb-outline",
+ "type": "custom:grid-layout",
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "layout": {
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "grid-gap": "16px",
+  "padding": "44px 40px 140px",
+  "margin": 0,
+  "place-content": "start center",
+  "height": "auto"
+ },
+ "cards": [
+  {
+   "type": "custom:button-card",
+   "template": "wm_page_title",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "triggers_update": [
+    "light.livingroom_light_readinglamp",
+    "light.living_room_cabinet",
+    "light.wled_tvlight",
+    "light.livingroom_light_sticks",
+    "light.ginger_light",
+    "light.controller_rgb_ir_96b26b",
+    "light.bedroom_light_main",
+    "light.bedroom_main_bedroom_bedside_tiago",
+    "light.bedroom_main_bedroom_bedside_cristiana",
+    "light.bedroom_christmas_lights",
+    "light.bathroom_light",
+    "light.office_light_ceiling",
+    "light.office_lamp_up",
+    "light.office_lamp_child",
+    "light.storage_lights_l1",
+    "light.storage_lights_l2",
+    "light.wled_server_rack",
+    "light.alleyway_floodlight",
+    "light.shellydimmer2_garden_wall",
+    "light.shellydimmer2_tree_lights",
+    "light.garden_lights_olivetree",
+    "light.shed_switch_l1"
+   ],
+   "variables": {
+    "title": "Lights",
+    "icon": "mdi:lightbulb-outline",
+    "subtitle": "[[[ const ids = ['light.livingroom_light_readinglamp', 'light.living_room_cabinet', 'light.wled_tvlight', 'light.livingroom_light_sticks', 'light.ginger_light', 'light.controller_rgb_ir_96b26b', 'light.bedroom_light_main', 'light.bedroom_main_bedroom_bedside_tiago', 'light.bedroom_main_bedroom_bedside_cristiana', 'light.bedroom_christmas_lights', 'light.bathroom_light', 'light.office_light_ceiling', 'light.office_lamp_up', 'light.office_lamp_child', 'light.storage_lights_l1', 'light.storage_lights_l2', 'light.wled_server_rack', 'light.alleyway_floodlight', 'light.shellydimmer2_garden_wall', 'light.shellydimmer2_tree_lights', 'light.garden_lights_olivetree', 'light.shed_switch_l1']; const n = ids.filter(i => states[i] && states[i].state === 'on').length; return n ? `<span style='color:#FFDC96'>${n} light${n > 1 ? 's' : ''} on</span>` : 'Every light is off'; ]]]"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_link_row",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "title": "Turn all lights off",
+    "subtitle": "Every light on this page, inside and out",
+    "icon": "mdi:lightbulb-off-outline"
+   },
+   "tap_action": {
+    "action": "perform-action",
+    "perform_action": "light.turn_off",
+    "target": {
+     "entity_id": [
+      "light.livingroom_light_readinglamp",
+      "light.living_room_cabinet",
+      "light.wled_tvlight",
+      "light.livingroom_light_sticks",
+      "light.ginger_light",
+      "light.controller_rgb_ir_96b26b",
+      "light.bedroom_light_main",
+      "light.bedroom_main_bedroom_bedside_tiago",
+      "light.bedroom_main_bedroom_bedside_cristiana",
+      "light.bedroom_christmas_lights",
+      "light.bathroom_light",
+      "light.office_light_ceiling",
+      "light.office_lamp_up",
+      "light.office_lamp_child",
+      "light.storage_lights_l1",
+      "light.storage_lights_l2",
+      "light.wled_server_rack",
+      "light.alleyway_floodlight",
+      "light.shellydimmer2_garden_wall",
+      "light.shellydimmer2_tree_lights",
+      "light.garden_lights_olivetree",
+      "light.shed_switch_l1"
+     ]
+    },
+    "haptic": "medium"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Living room"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.livingroom_light_readinglamp",
+   "variables": {
+    "name": "Reading lamp",
+    "icon": "mdi:floor-lamp-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.living_room_cabinet",
+   "variables": {
+    "name": "Cabinet",
+    "icon": "mdi:led-strip-variant"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.wled_tvlight",
+   "variables": {
+    "name": "TV light",
+    "icon": "mdi:television-ambient-light"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_tile",
+   "entity": "light.livingroom_light_sticks",
+   "variables": {
+    "name": "Light sticks",
+    "icon": "mdi:lightbulb-group-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.ginger_light",
+   "variables": {
+    "name": "Ginger light",
+    "icon": "mdi:dog"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Kitchen"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.controller_rgb_ir_96b26b",
+   "variables": {
+    "name": "Kitchen counter",
+    "icon": "mdi:led-strip-variant"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Bedroom"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.bedroom_light_main",
+   "variables": {
+    "name": "Ceiling",
+    "icon": "mdi:ceiling-light-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.bedroom_main_bedroom_bedside_tiago",
+   "variables": {
+    "name": "Tiago bedside",
+    "icon": "mdi:lamp-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.bedroom_main_bedroom_bedside_cristiana",
+   "variables": {
+    "name": "Cristiana bedside",
+    "icon": "mdi:lamp-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_tile",
+   "entity": "light.bedroom_christmas_lights",
+   "variables": {
+    "name": "Christmas lights",
+    "icon": "mdi:string-lights"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Bathroom"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_tile",
+   "entity": "light.bathroom_light",
+   "variables": {
+    "name": "Bathroom",
+    "icon": "mdi:ceiling-light-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Office"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.office_light_ceiling",
+   "variables": {
+    "name": "Ceiling",
+    "icon": "mdi:ceiling-light-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.office_lamp_up",
+   "variables": {
+    "name": "Lamp up",
+    "icon": "mdi:floor-lamp-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.office_lamp_child",
+   "variables": {
+    "name": "Lamp low",
+    "icon": "mdi:floor-lamp-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Storage"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_tile",
+   "entity": "light.storage_lights_l1",
+   "variables": {
+    "name": "Storage 1",
+    "icon": "mdi:ceiling-light-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_tile",
+   "entity": "light.storage_lights_l2",
+   "variables": {
+    "name": "Storage 2",
+    "icon": "mdi:ceiling-light-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.wled_server_rack",
+   "variables": {
+    "name": "Server rack",
+    "icon": "mdi:server"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Driveway"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.alleyway_floodlight",
+   "variables": {
+    "name": "Floodlight",
+    "icon": "mdi:light-flood-down"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Garden"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.shellydimmer2_garden_wall",
+   "variables": {
+    "name": "Garden wall",
+    "icon": "mdi:wall-sconce-flat-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.shellydimmer2_tree_lights",
+   "variables": {
+    "name": "Tree lights",
+    "icon": "mdi:pine-tree"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.garden_lights_olivetree",
+   "variables": {
+    "name": "Olive tree",
+    "icon": "mdi:tree-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Shed"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_tile",
+   "entity": "light.shed_switch_l1",
+   "variables": {
+    "name": "Shed",
+    "icon": "mdi:ceiling-light-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_nav",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ]
+}

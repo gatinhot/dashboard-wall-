@@ -1,0 +1,61 @@
+{
+ "title": "Laundry",
+ "path": "room-laundry",
+ "icon": "mdi:washing-machine",
+ "type": "custom:grid-layout",
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "layout": {
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "grid-gap": "16px",
+  "padding": "44px 40px 140px",
+  "margin": 0,
+  "place-content": "start center",
+  "height": "auto"
+ },
+ "cards": [
+  {
+   "type": "custom:button-card",
+   "template": "wm_room_head",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "triggers_update": [],
+   "variables": {
+    "title": "Laundry",
+    "icon": "mdi:washing-machine",
+    "subtitle": "[[[ const parts = []; const ts = states['none']; const tv = ts ? parseFloat(ts.entity_id.startsWith('weather.') ? ts.attributes.temperature : ts.state) : NaN; if (!isNaN(tv)) parts.push(Math.round(tv) + '°'); const hs = states['none']; const hv = hs ? parseFloat(hs.state) : NaN; if (!isNaN(hv)) parts.push(Math.round(hv) + '% humidity'); const ids = []; const n = ids.filter(i => states[i] && states[i].state === 'on').length; if (ids.length) parts.push(n ? `<span style='color:#FFDC96'>${n} light${n > 1 ? 's' : ''} on</span>` : 'Lights off'); return parts.length ? parts.join(' · ') : 'Nothing set up here yet'; ]]]"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Sensors"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_text_tile",
+   "entity": "sensor.washerdryer_state",
+   "triggers_update": [
+    "sensor.washerdryer_remaining"
+   ],
+   "variables": {
+    "name": "Washer dryer",
+    "icon": "mdi:washing-machine",
+    "text": "[[[ const s = states['sensor.washerdryer_state']?.state; if (!s || ['unavailable', 'unknown'].includes(s)) return 'Unavailable'; const r = states['sensor.washerdryer_remaining']?.state; const m = {device_state_running: 'Running', device_state_paused: 'Paused', device_state_time_delay_active: 'Starting later', device_state_on: 'On', device_state_off: 'Off'}[s] || s; return m + (s === 'device_state_running' && r && !['unavailable', 'unknown'].includes(r) ? ' · ' + r + ' left' : ''); ]]]",
+    "tone": "[[[ const s = states['sensor.washerdryer_state']?.state; return s === 'device_state_running' ? 'mint' : ['device_state_paused', 'device_state_time_delay_active'].includes(s) ? 'peach' : 'none'; ]]]"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_nav",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ]
+}

@@ -1,0 +1,236 @@
+{
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "cards": [
+  {
+   "entity": "climate.living_room",
+   "template": "wm_page_title",
+   "triggers_update": [
+    "climate.office_ac"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:home-thermometer-outline",
+    "subtitle": "[[[ const act = (s => s ? (s.attributes.hvac_action || ({heat: 'heating', cool: 'cooling', dry: 'drying', fan_only: 'fan', heat_cool: 'auto', auto: 'auto'})[s.state] || null) : null); const words = {heating: 'heating', cooling: 'cooling', drying: 'drying', fan: 'on fan', auto: 'on auto'}; const on = ['climate.living_room', 'climate.office_ac'].map(i => states[i]).filter(Boolean).map(s => [s.attributes.friendly_name, act(s)]).filter(x => words[x[1]]).map(x => `${x[0]} is ${words[x[1]]}`); return on.length ? on.join(' · ') : 'Nothing is heating or cooling'; ]]]",
+    "title": "Climate"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "custom_fields": {
+    "modes": {
+     "card": {
+      "cards": [
+       {
+        "entity": "climate.living_room",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Heat",
+         "mode": "heat"
+        }
+       },
+       {
+        "entity": "climate.living_room",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Off",
+         "mode": "off"
+        }
+       }
+      ],
+      "type": "horizontal-stack"
+     }
+    }
+   },
+   "entity": "climate.living_room",
+   "template": "wm_climate",
+   "triggers_update": [
+    "sensor.living_room_temperature",
+    "sensor.living_room_humidity"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "humidity": "sensor.living_room_humidity",
+    "icon": "mdi:sofa-outline",
+    "name": "Living room",
+    "temp": "sensor.living_room_temperature"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "custom_fields": {
+    "modes": {
+     "card": {
+      "cards": [
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Off",
+         "mode": "off"
+        }
+       },
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Heat",
+         "mode": "heat"
+        }
+       },
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Cool",
+         "mode": "cool"
+        }
+       },
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Dry",
+         "mode": "dry"
+        }
+       },
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Fan",
+         "mode": "fan_only"
+        }
+       },
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Auto",
+         "mode": "heat_cool"
+        }
+       }
+      ],
+      "type": "horizontal-stack"
+     }
+    }
+   },
+   "entity": "climate.office_ac",
+   "template": "wm_climate",
+   "triggers_update": [
+    "sensor.office_temperature"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:air-conditioner",
+    "name": "Office AC",
+    "temp": "sensor.office_temperature"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Air"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "humidifier.dehumidifier_a54e",
+   "template": "wm_toggle_row",
+   "triggers_update": [
+    "sensor.dehumidifier_a54e_humidity"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:air-humidifier",
+    "subtitle": "[[[ const h = parseFloat(states['sensor.dehumidifier_a54e_humidity']?.state); return isNaN(h) ? 'Bedroom air' : `Bedroom humidity ${Math.round(h)}%`; ]]]",
+    "title": "Bedroom dehumidifier"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Rooms"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "sensor.living_room_temperature",
+   "template": "wm_temp_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:sofa-outline",
+    "name": "Living room"
+   }
+  },
+  {
+   "entity": "sensor.kitchen_presence_multi_sensor_fp300_testing_temperature",
+   "template": "wm_temp_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:pot-steam-outline",
+    "name": "Kitchen"
+   }
+  },
+  {
+   "entity": "sensor.dehumidifier_a54e_temperature",
+   "template": "wm_temp_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:bed-king-outline",
+    "name": "Bedroom"
+   }
+  },
+  {
+   "entity": "sensor.office_temperature",
+   "template": "wm_temp_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:desktop-tower-monitor",
+    "name": "Office"
+   }
+  },
+  {
+   "template": "wm_nav",
+   "type": "custom:button-card",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ],
+ "icon": "mdi:home-thermometer-outline",
+ "layout": {
+  "grid-gap": "16px",
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "height": "auto",
+  "margin": 0,
+  "padding": "44px 40px 140px",
+  "place-content": "start center"
+ },
+ "path": "climate",
+ "title": "Climate",
+ "type": "custom:grid-layout"
+}

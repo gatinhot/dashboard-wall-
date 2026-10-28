@@ -1,0 +1,187 @@
+{
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "cards": [
+  {
+   "template": "wm_page_title",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:cog-outline",
+    "subtitle": "Wall panel · 11 West Mead",
+    "title": "Settings"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Home"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "input_boolean.night_mode",
+   "template": "wm_toggle_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:weather-night",
+    "subtitle": "Runs your night routines",
+    "title": "Night mode"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "input_boolean.guest_mode",
+   "template": "wm_toggle_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:account-multiple-outline",
+    "subtitle": "Guests staying, lets automations skip",
+    "title": "Guest mode"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Display"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "tap_action": {
+    "action": "navigate",
+    "haptic": "light",
+    "navigation_path": "/11-west-mead-wall-beta/idle"
+   },
+   "template": "wm_link_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:clock-outline",
+    "subtitle": "Clock and greeting for a quick glance",
+    "title": "Screensaver"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "System"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "tap_action": {
+    "action": "navigate",
+    "haptic": "light",
+    "navigation_path": "/11-west-mead/maintenance"
+   },
+   "template": "wm_link_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:wrench-outline",
+    "subtitle": "Batteries, unavailable devices and updates",
+    "title": "Maintenance"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "tap_action": {
+    "action": "navigate",
+    "haptic": "light",
+    "navigation_path": "/11-west-mead/home"
+   },
+   "template": "wm_link_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:view-dashboard-outline",
+    "subtitle": "The main 11 West Mead dashboard",
+    "title": "Full dashboard"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "tap_action": {
+    "action": "url",
+    "haptic": "light",
+    "url_path": "https://docs.google.com/spreadsheets/d/1Yh88-orjq-xJq17DTTjW4tqOL0suJO4JrAqvPM1_Jto/edit"
+   },
+   "template": "wm_link_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:clipboard-text-outline",
+    "subtitle": "Wall dashboard requests and feedback",
+    "title": "Requests"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "tap_action": {
+    "action": "navigate",
+    "haptic": "light",
+    "navigation_path": "/config/dashboard"
+   },
+   "template": "wm_link_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:exit-to-app",
+    "subtitle": "Back to Home Assistant with the normal menus",
+    "title": "Exit dashboard"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_footer",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "11 West Mead Wall v020 · BETA · 21 October 2026"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_nav",
+   "type": "custom:button-card",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ],
+ "icon": "mdi:cog-outline",
+ "layout": {
+  "grid-gap": "16px",
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "height": "auto",
+  "margin": 0,
+  "padding": "44px 40px 140px",
+  "place-content": "start center"
+ },
+ "path": "settings",
+ "title": "Settings",
+ "type": "custom:grid-layout"
+}

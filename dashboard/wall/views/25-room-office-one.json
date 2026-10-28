@@ -1,0 +1,256 @@
+{
+ "title": "Office one",
+ "path": "room-office-one",
+ "icon": "mdi:desktop-tower-monitor",
+ "type": "custom:grid-layout",
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "layout": {
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "grid-gap": "16px",
+  "padding": "44px 40px 140px",
+  "margin": 0,
+  "place-content": "start center",
+  "height": "auto"
+ },
+ "cards": [
+  {
+   "type": "custom:button-card",
+   "template": "wm_room_head",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "triggers_update": [
+    "light.office_light_ceiling",
+    "light.office_lamp_up",
+    "light.office_lamp_child",
+    "sensor.office_temperature"
+   ],
+   "variables": {
+    "title": "Office one",
+    "icon": "mdi:desktop-tower-monitor",
+    "subtitle": "[[[ const parts = []; const ts = states['sensor.office_temperature']; const tv = ts ? parseFloat(ts.entity_id.startsWith('weather.') ? ts.attributes.temperature : ts.state) : NaN; if (!isNaN(tv)) parts.push(Math.round(tv) + '°'); const hs = states['none']; const hv = hs ? parseFloat(hs.state) : NaN; if (!isNaN(hv)) parts.push(Math.round(hv) + '% humidity'); const ids = ['light.office_light_ceiling', 'light.office_lamp_up', 'light.office_lamp_child']; const n = ids.filter(i => states[i] && states[i].state === 'on').length; if (ids.length) parts.push(n ? `<span style='color:#FFDC96'>${n} light${n > 1 ? 's' : ''} on</span>` : 'Lights off'); return parts.length ? parts.join(' · ') : 'Nothing set up here yet'; ]]]"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Lights"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.office_light_ceiling",
+   "variables": {
+    "name": "Ceiling",
+    "icon": "mdi:ceiling-light-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.office_lamp_up",
+   "variables": {
+    "name": "Lamp up",
+    "icon": "mdi:floor-lamp-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.office_lamp_child",
+   "variables": {
+    "name": "Lamp low",
+    "icon": "mdi:floor-lamp-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Climate"
+   }
+  },
+  {
+   "custom_fields": {
+    "modes": {
+     "card": {
+      "cards": [
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Off",
+         "mode": "off"
+        }
+       },
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Heat",
+         "mode": "heat"
+        }
+       },
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Cool",
+         "mode": "cool"
+        }
+       },
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Dry",
+         "mode": "dry"
+        }
+       },
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Fan",
+         "mode": "fan_only"
+        }
+       },
+       {
+        "entity": "climate.office_ac",
+        "template": "wm_hvac_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Auto",
+         "mode": "heat_cool"
+        }
+       }
+      ],
+      "type": "horizontal-stack"
+     }
+    }
+   },
+   "entity": "climate.office_ac",
+   "template": "wm_climate",
+   "triggers_update": [
+    "sensor.office_temperature"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:air-conditioner",
+    "name": "Office AC",
+    "temp": "sensor.office_temperature"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Curtains"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_cover_tile",
+   "entity": "cover.office_curtains",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "name": "Curtains"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Music"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_media_room",
+   "entity": "media_player.office_speaker_2",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "name": "Office speaker"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Sensors"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_status_tile",
+   "entity": "binary_sensor.office_sensor_door",
+   "variables": {
+    "name": "Door",
+    "icon": "mdi:door"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Go to"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_link_row",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "title": "Justin",
+    "subtitle": "Robot vacuum",
+    "icon": "mdi:robot-vacuum"
+   },
+   "tap_action": {
+    "action": "navigate",
+    "navigation_path": "/11-west-mead-wall-beta/vacuums",
+    "haptic": "light"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_nav",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ]
+}

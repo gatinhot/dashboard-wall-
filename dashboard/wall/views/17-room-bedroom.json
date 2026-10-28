@@ -1,0 +1,194 @@
+{
+ "title": "Bedroom",
+ "path": "room-bedroom",
+ "icon": "mdi:bed-king-outline",
+ "type": "custom:grid-layout",
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "layout": {
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "grid-gap": "16px",
+  "padding": "44px 40px 140px",
+  "margin": 0,
+  "place-content": "start center",
+  "height": "auto"
+ },
+ "cards": [
+  {
+   "type": "custom:button-card",
+   "template": "wm_room_head",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "triggers_update": [
+    "light.bedroom_light_main",
+    "light.bedroom_main_bedroom_bedside_tiago",
+    "light.bedroom_main_bedroom_bedside_cristiana",
+    "light.bedroom_christmas_lights",
+    "sensor.dehumidifier_a54e_temperature",
+    "sensor.dehumidifier_a54e_humidity"
+   ],
+   "variables": {
+    "title": "Bedroom",
+    "icon": "mdi:bed-king-outline",
+    "subtitle": "[[[ const parts = []; const ts = states['sensor.dehumidifier_a54e_temperature']; const tv = ts ? parseFloat(ts.entity_id.startsWith('weather.') ? ts.attributes.temperature : ts.state) : NaN; if (!isNaN(tv)) parts.push(Math.round(tv) + '°'); const hs = states['sensor.dehumidifier_a54e_humidity']; const hv = hs ? parseFloat(hs.state) : NaN; if (!isNaN(hv)) parts.push(Math.round(hv) + '% humidity'); const ids = ['light.bedroom_light_main', 'light.bedroom_main_bedroom_bedside_tiago', 'light.bedroom_main_bedroom_bedside_cristiana', 'light.bedroom_christmas_lights']; const n = ids.filter(i => states[i] && states[i].state === 'on').length; if (ids.length) parts.push(n ? `<span style='color:#FFDC96'>${n} light${n > 1 ? 's' : ''} on</span>` : 'Lights off'); return parts.length ? parts.join(' · ') : 'Nothing set up here yet'; ]]]"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Lights"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.bedroom_light_main",
+   "variables": {
+    "name": "Ceiling",
+    "icon": "mdi:ceiling-light-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.bedroom_main_bedroom_bedside_tiago",
+   "variables": {
+    "name": "Tiago bedside",
+    "icon": "mdi:lamp-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.bedroom_main_bedroom_bedside_cristiana",
+   "variables": {
+    "name": "Cristiana bedside",
+    "icon": "mdi:lamp-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_tile",
+   "entity": "light.bedroom_christmas_lights",
+   "variables": {
+    "name": "Christmas lights",
+    "icon": "mdi:string-lights"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Music"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_media_room",
+   "entity": "media_player.bedroom_speaker_2",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "name": "Bedroom speaker"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Scenes"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_scene_tile",
+   "entity": "scene.normal_bedroom_lights",
+   "variables": {
+    "name": "Normal lights",
+    "icon": "mdi:lamp-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Devices"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_toggle_row",
+   "entity": "humidifier.dehumidifier_a54e",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "title": "Dehumidifier",
+    "subtitle": "Keeps the bedroom air dry",
+    "icon": "mdi:air-humidifier"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_toggle_row",
+   "entity": "switch.christmastreeoutside_outlet",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "title": "Tiago bedside devices",
+    "subtitle": "Plug by Tiago’s bedside",
+    "icon": "mdi:power-socket-uk"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Sensors"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_status_tile",
+   "entity": "binary_sensor.bedroom_sensor_window_01_contact",
+   "variables": {
+    "name": "Window 1",
+    "icon": "mdi:window-closed-variant"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_status_tile",
+   "entity": "binary_sensor.bedroom_sensor_window_02_contact",
+   "variables": {
+    "name": "Window 2",
+    "icon": "mdi:window-closed-variant"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_nav",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ]
+}

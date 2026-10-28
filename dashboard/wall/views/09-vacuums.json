@@ -1,0 +1,167 @@
+{
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "cards": [
+  {
+   "entity": "vacuum.justin",
+   "template": "wm_page_title",
+   "triggers_update": [
+    "vacuum.mini_robot_vacuum_k10"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:robot-vacuum",
+    "subtitle": "[[[ const v = [['Justin', 'vacuum.justin'], ['Cindy', 'vacuum.mini_robot_vacuum_k10']].map(x => [x[0], states[x[1]]?.state]); const busy = v.filter(x => x[1] === 'cleaning').map(x => x[0]); return busy.length ? `<span style='color:#AADCC8'>${busy.join(' and ')} ${busy.length > 1 ? 'are' : 'is'} cleaning</span>` : 'Nothing is cleaning right now'; ]]]",
+    "title": "Robot vacuums"
+   }
+  },
+  {
+   "custom_fields": {
+    "fan": {
+     "card": {
+      "cards": [
+       {
+        "entity": "vacuum.justin",
+        "template": "wm_fan_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Quiet",
+         "speed": "quiet"
+        }
+       },
+       {
+        "entity": "vacuum.justin",
+        "template": "wm_fan_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Normal",
+         "speed": "normal"
+        }
+       },
+       {
+        "entity": "vacuum.justin",
+        "template": "wm_fan_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Max",
+         "speed": "max"
+        }
+       },
+       {
+        "entity": "vacuum.justin",
+        "template": "wm_fan_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Max+",
+         "speed": "max_plus"
+        }
+       }
+      ],
+      "type": "horizontal-stack"
+     }
+    }
+   },
+   "entity": "vacuum.justin",
+   "template": "wm_vacuum",
+   "triggers_update": [
+    "sensor.justin_battery",
+    "sensor.justin_area_cleaned",
+    "sensor.justin_cleaning_duration"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "area": "Office",
+    "area_sensor": "sensor.justin_area_cleaned",
+    "battery": "sensor.justin_battery",
+    "duration": "sensor.justin_cleaning_duration",
+    "name": "Justin"
+   }
+  },
+  {
+   "custom_fields": {
+    "fan": {
+     "card": {
+      "cards": [
+       {
+        "entity": "vacuum.mini_robot_vacuum_k10",
+        "template": "wm_fan_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Quiet",
+         "speed": "quiet"
+        }
+       },
+       {
+        "entity": "vacuum.mini_robot_vacuum_k10",
+        "template": "wm_fan_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Standard",
+         "speed": "standard"
+        }
+       },
+       {
+        "entity": "vacuum.mini_robot_vacuum_k10",
+        "template": "wm_fan_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Strong",
+         "speed": "strong"
+        }
+       },
+       {
+        "entity": "vacuum.mini_robot_vacuum_k10",
+        "template": "wm_fan_seg",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "Max",
+         "speed": "max"
+        }
+       }
+      ],
+      "type": "horizontal-stack"
+     }
+    }
+   },
+   "entity": "vacuum.mini_robot_vacuum_k10",
+   "template": "wm_vacuum",
+   "type": "custom:button-card",
+   "variables": {
+    "area": "Living room",
+    "name": "Cindy"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Schedules"
+   }
+  },
+  {
+   "entity": "automation.justin_cleans_office",
+   "template": "wm_toggle_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:calendar-clock",
+    "subtitle": "Scheduled office clean",
+    "title": "Justin cleans the office"
+   }
+  },
+  {
+   "template": "wm_nav",
+   "type": "custom:button-card"
+  }
+ ],
+ "icon": "mdi:robot-vacuum",
+ "layout": {
+  "grid-gap": "16px",
+  "grid-template-columns": "minmax(0, 640px)",
+  "height": "auto",
+  "margin": 0,
+  "padding": "44px 40px 140px",
+  "place-content": "start center"
+ },
+ "path": "vacuums",
+ "title": "Vacuums",
+ "type": "custom:grid-layout"
+}

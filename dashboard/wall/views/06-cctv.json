@@ -1,0 +1,696 @@
+{
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "cards": [
+  {
+   "entity": "sensor.cctv_doorbell_notice",
+   "template": "wm_page_title",
+   "triggers_update": [
+    "sensor.cctv_night_person_notice",
+    "sensor.night_person_last_seen",
+    "input_datetime.cctv_warning_cleared"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:cctv",
+    "subtitle": "[[[ const bad = ['none', 'unknown', 'unavailable', '']; let night = states['sensor.cctv_night_person_notice']?.state || ''; const seen = Date.parse(states['sensor.night_person_last_seen']?.state) || 0; const cleared = Number(states['input_datetime.cctv_warning_cleared']?.attributes?.timestamp || 0) * 1000; if (!(seen > cleared)) night = 'none'; const bell = states['sensor.cctv_doorbell_notice']?.state || ''; const msgs = [night, bell].filter(m => !bad.includes(m)); return msgs.length ? `<span style='color:#FFCC99'>${msgs.join('. ')}</span>` : 'All quiet, nothing to report'; ]]]",
+    "title": "Cameras"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "custom_fields": {
+    "a": {
+     "card": {
+      "entity": "input_select.cctv_selected_camera",
+      "template": "wm_seg_select",
+      "type": "custom:button-card",
+      "variables": {
+       "label": "Front door",
+       "option": "Front door"
+      }
+     }
+    },
+    "b": {
+     "card": {
+      "entity": "input_select.cctv_selected_camera",
+      "template": "wm_seg_select",
+      "type": "custom:button-card",
+      "variables": {
+       "label": "Garden",
+       "option": "Garden"
+      }
+     }
+    },
+    "c": {
+     "card": {
+      "entity": "input_select.cctv_selected_camera",
+      "template": "wm_seg_select",
+      "type": "custom:button-card",
+      "variables": {
+       "label": "Alleyway",
+       "option": "Alleyway"
+      }
+     }
+    },
+    "d": {
+     "card": {
+      "entity": "input_select.cctv_selected_camera",
+      "template": "wm_seg_select",
+      "type": "custom:button-card",
+      "variables": {
+       "label": "Sofa",
+       "option": "Sofa"
+      }
+     }
+    },
+    "e": {
+     "card": {
+      "entity": "input_select.cctv_selected_camera",
+      "template": "wm_seg_select",
+      "type": "custom:button-card",
+      "variables": {
+       "label": "Ginger",
+       "option": "Ginger's crate"
+      }
+     }
+    }
+   },
+   "entity": "input_select.cctv_selected_camera",
+   "template": "wm_picker",
+   "type": "custom:button-card",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "card": {
+    "cameras": [
+     {
+      "camera_entity": "camera.front_doorbell_poe_fluent",
+      "id": "front_door",
+      "live": {
+       "actions": {
+        "tap_action": {
+         "action": "none"
+        }
+       }
+      },
+      "live_provider": "webrtc-card",
+      "title": "Front door"
+     }
+    ],
+    "live": {
+     "auto_mute": [
+      "unselected",
+      "hidden"
+     ],
+     "auto_pause": [
+      "unselected"
+     ],
+     "auto_play": [
+      "selected"
+     ],
+     "auto_unmute": [],
+     "controls": {
+      "ptz": {
+       "mode": "off"
+      },
+      "thumbnails": {
+       "mode": "none"
+      }
+     },
+     "display": {
+      "mode": "single"
+     },
+     "lazy_load": true,
+     "lazy_unload": [
+      "hidden",
+      "unselected"
+     ],
+     "preload": false,
+     "show_image_during_load": true,
+     "transition_effect": "none"
+    },
+    "menu": {
+     "style": "none"
+    },
+    "status_bar": {
+     "style": "none"
+    },
+    "type": "custom:advanced-camera-card",
+    "view": {
+     "camera_select": "live",
+     "default": "live",
+     "keyboard_shortcuts": {
+      "enabled": false
+     }
+    }
+   },
+   "conditions": [
+    {
+     "condition": "state",
+     "entity": "input_select.cctv_selected_camera",
+     "state": "Front door"
+    }
+   ],
+   "type": "conditional",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "card": {
+    "cameras": [
+     {
+      "camera_entity": "camera.garden_back_fluent",
+      "id": "garden",
+      "live": {
+       "actions": {
+        "tap_action": {
+         "action": "none"
+        }
+       }
+      },
+      "live_provider": "webrtc-card",
+      "title": "Garden"
+     }
+    ],
+    "live": {
+     "auto_mute": [
+      "unselected",
+      "hidden"
+     ],
+     "auto_pause": [
+      "unselected"
+     ],
+     "auto_play": [
+      "selected"
+     ],
+     "auto_unmute": [],
+     "controls": {
+      "ptz": {
+       "mode": "off"
+      },
+      "thumbnails": {
+       "mode": "none"
+      }
+     },
+     "display": {
+      "mode": "single"
+     },
+     "lazy_load": true,
+     "lazy_unload": [
+      "hidden",
+      "unselected"
+     ],
+     "preload": false,
+     "show_image_during_load": true,
+     "transition_effect": "none"
+    },
+    "menu": {
+     "style": "none"
+    },
+    "status_bar": {
+     "style": "none"
+    },
+    "type": "custom:advanced-camera-card",
+    "view": {
+     "camera_select": "live",
+     "default": "live",
+     "keyboard_shortcuts": {
+      "enabled": false
+     }
+    }
+   },
+   "conditions": [
+    {
+     "condition": "state",
+     "entity": "input_select.cctv_selected_camera",
+     "state": "Garden"
+    }
+   ],
+   "type": "conditional",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "card": {
+    "cameras": [
+     {
+      "camera_entity": "camera.alleyway_fluent",
+      "id": "alleyway",
+      "live": {
+       "actions": {
+        "tap_action": {
+         "action": "none"
+        }
+       }
+      },
+      "live_provider": "webrtc-card",
+      "ptz": {
+       "actions_down_start": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.alleyway_ptz_down"
+        }
+       },
+       "actions_down_stop": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.alleyway_ptz_stop"
+        }
+       },
+       "actions_left_start": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.alleyway_ptz_left"
+        }
+       },
+       "actions_left_stop": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.alleyway_ptz_stop"
+        }
+       },
+       "actions_right_start": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.alleyway_ptz_right"
+        }
+       },
+       "actions_right_stop": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.alleyway_ptz_stop"
+        }
+       },
+       "actions_up_start": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.alleyway_ptz_up"
+        }
+       },
+       "actions_up_stop": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.alleyway_ptz_stop"
+        }
+       },
+       "c2r_delay_between_calls_seconds": 0.4
+      },
+      "title": "Alleyway"
+     }
+    ],
+    "live": {
+     "auto_mute": [
+      "unselected",
+      "hidden"
+     ],
+     "auto_pause": [
+      "unselected"
+     ],
+     "auto_play": [
+      "selected"
+     ],
+     "auto_unmute": [],
+     "controls": {
+      "ptz": {
+       "hide_home": true,
+       "hide_zoom": true,
+       "mode": "on",
+       "orientation": "horizontal",
+       "position": "bottom-right"
+      },
+      "thumbnails": {
+       "mode": "none"
+      }
+     },
+     "display": {
+      "mode": "single"
+     },
+     "lazy_load": true,
+     "lazy_unload": [
+      "hidden",
+      "unselected"
+     ],
+     "preload": false,
+     "show_image_during_load": true,
+     "transition_effect": "none"
+    },
+    "menu": {
+     "style": "none"
+    },
+    "status_bar": {
+     "style": "none"
+    },
+    "type": "custom:advanced-camera-card",
+    "view": {
+     "camera_select": "live",
+     "default": "live",
+     "keyboard_shortcuts": {
+      "enabled": false
+     }
+    }
+   },
+   "conditions": [
+    {
+     "condition": "state",
+     "entity": "input_select.cctv_selected_camera",
+     "state": "Alleyway"
+    }
+   ],
+   "type": "conditional",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "card": {
+    "cameras": [
+     {
+      "camera_entity": "camera.sofa_camera",
+      "id": "sofa",
+      "live": {
+       "actions": {
+        "tap_action": {
+         "action": "none"
+        }
+       }
+      },
+      "title": "Sofa"
+     }
+    ],
+    "live": {
+     "auto_mute": [
+      "unselected",
+      "hidden"
+     ],
+     "auto_pause": [
+      "unselected"
+     ],
+     "auto_play": [
+      "selected"
+     ],
+     "auto_unmute": [],
+     "controls": {
+      "ptz": {
+       "mode": "off"
+      },
+      "thumbnails": {
+       "mode": "none"
+      }
+     },
+     "display": {
+      "mode": "single"
+     },
+     "lazy_load": true,
+     "lazy_unload": [
+      "hidden",
+      "unselected"
+     ],
+     "preload": false,
+     "show_image_during_load": true,
+     "transition_effect": "none"
+    },
+    "menu": {
+     "style": "none"
+    },
+    "status_bar": {
+     "style": "none"
+    },
+    "type": "custom:advanced-camera-card",
+    "view": {
+     "camera_select": "live",
+     "default": "live",
+     "keyboard_shortcuts": {
+      "enabled": false
+     }
+    }
+   },
+   "conditions": [
+    {
+     "condition": "state",
+     "entity": "input_select.cctv_selected_camera",
+     "state": "Sofa"
+    }
+   ],
+   "type": "conditional",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "card": {
+    "cameras": [
+     {
+      "camera_entity": "camera.ginger_crate",
+      "id": "ginger_crate",
+      "live": {
+       "actions": {
+        "tap_action": {
+         "action": "none"
+        }
+       }
+      },
+      "ptz": {
+       "actions_down_start": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.living_room_ptz_down"
+        }
+       },
+       "actions_down_stop": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.living_room_ptz_stop"
+        }
+       },
+       "actions_left_start": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.living_room_ptz_left"
+        }
+       },
+       "actions_left_stop": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.living_room_ptz_stop"
+        }
+       },
+       "actions_right_start": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.living_room_ptz_right"
+        }
+       },
+       "actions_right_stop": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.living_room_ptz_stop"
+        }
+       },
+       "actions_up_start": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.living_room_ptz_up"
+        }
+       },
+       "actions_up_stop": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.living_room_ptz_stop"
+        }
+       },
+       "c2r_delay_between_calls_seconds": 0.4
+      },
+      "title": "Ginger's crate"
+     }
+    ],
+    "live": {
+     "auto_mute": [
+      "unselected",
+      "hidden"
+     ],
+     "auto_pause": [
+      "unselected"
+     ],
+     "auto_play": [
+      "selected"
+     ],
+     "auto_unmute": [],
+     "controls": {
+      "ptz": {
+       "hide_home": true,
+       "hide_zoom": true,
+       "mode": "on",
+       "orientation": "horizontal",
+       "position": "bottom-right"
+      },
+      "thumbnails": {
+       "mode": "none"
+      }
+     },
+     "display": {
+      "mode": "single"
+     },
+     "lazy_load": true,
+     "lazy_unload": [
+      "hidden",
+      "unselected"
+     ],
+     "preload": false,
+     "show_image_during_load": true,
+     "transition_effect": "none"
+    },
+    "menu": {
+     "style": "none"
+    },
+    "status_bar": {
+     "style": "none"
+    },
+    "type": "custom:advanced-camera-card",
+    "view": {
+     "camera_select": "live",
+     "default": "live",
+     "keyboard_shortcuts": {
+      "enabled": false
+     }
+    }
+   },
+   "conditions": [
+    {
+     "condition": "state",
+     "entity": "input_select.cctv_selected_camera",
+     "state": "Ginger's crate"
+    }
+   ],
+   "type": "conditional",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "card": {
+    "entity": "light.alleyway_floodlight",
+    "template": "wm_toggle_row",
+    "type": "custom:button-card",
+    "variables": {
+     "icon": "mdi:light-flood-down",
+     "subtitle": "Alleyway light",
+     "title": "Floodlight"
+    }
+   },
+   "conditions": [
+    {
+     "condition": "state",
+     "entity": "input_select.cctv_selected_camera",
+     "state": "Alleyway"
+    }
+   ],
+   "type": "conditional",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "styles": {
+    "card": [
+     {
+      "display": "[[[ const seen = Date.parse(states['sensor.night_person_last_seen']?.state); const notice = states['sensor.cctv_night_person_notice']?.state; const cleared = Number(states['input_datetime.cctv_warning_cleared']?.attributes?.timestamp || 0) * 1000; const active = !!notice && !['none', 'unknown', 'unavailable', ''].includes(notice) && seen > cleared; return active ? 'grid' : 'none'; ]]]"
+     }
+    ]
+   },
+   "tap_action": {
+    "action": "perform-action",
+    "data": {
+     "timestamp": "[[[ return Math.floor(Date.now() / 1000); ]]]"
+    },
+    "haptic": "success",
+    "perform_action": "input_datetime.set_datetime",
+    "target": {
+     "entity_id": "input_datetime.cctv_warning_cleared"
+    }
+   },
+   "template": "wm_link_row",
+   "triggers_update": [
+    "sensor.cctv_night_person_notice",
+    "sensor.night_person_last_seen",
+    "input_datetime.cctv_warning_cleared"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:alert-circle-check-outline",
+    "subtitle": "Mark the night alert as seen",
+    "title": "Clear night warning"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Frigate"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "tap_action": {
+    "action": "navigate",
+    "haptic": "light",
+    "navigation_path": "/ccab4aaf_frigate-proxy"
+   },
+   "template": "wm_link_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:cctv",
+    "subtitle": "Events, recordings and camera settings",
+    "title": "Open Frigate"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_nav",
+   "type": "custom:button-card",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ],
+ "icon": "mdi:cctv",
+ "layout": {
+  "grid-gap": "16px",
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "height": "auto",
+  "margin": 0,
+  "padding": "44px 40px 140px",
+  "place-content": "start center"
+ },
+ "path": "cctv",
+ "title": "CCTV",
+ "type": "custom:grid-layout"
+}

@@ -1,0 +1,532 @@
+{
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "cards": [
+  {
+   "template": "wm_page_title",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:leaf",
+    "subtitle": "Whole house, live from the main meter",
+    "title": "Energy"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "sensor.shelly_main_power_meter_channel_1_power",
+   "template": "wm_energy_now",
+   "triggers_update": [
+    "input_number.energy_high_usage_from",
+    "input_number.energy_normal_usage_from",
+    "sensor.serverpowermonitor_power",
+    "sensor.tasmota_energy_power",
+    "sensor.tasmota_energy_power_2",
+    "sensor.pumpsafetyoff_energy_power_2",
+    "sensor.shelly1pmminig3_pump_safety_power",
+    "sensor.shellydimmer2_c8c9a33cdfe6_power",
+    "sensor.shellydimmer2_c8c9a33cdf43_power",
+    "sensor.living_room_plug_power",
+    "sensor.livingroom_sofa_em_power",
+    "sensor.ps5_current_consumption",
+    "sensor.livingroom_ethernet_spliter_ps5_current_consumption",
+    "sensor.livingroom_mini_pc_current_consumption",
+    "sensor.livingroom_cabinet_led_current_consumption",
+    "sensor.office_tiago_desk_shelly1pmminig3_power",
+    "sensor.christmastreeoutside_power",
+    "sensor.bedroom_main_bedroom_bedside_tiago_power",
+    "sensor.bedroom_main_bedroom_bedside_cristiana_power",
+    "sensor.unnamed_p304m_tiago_desk_01_current_consumption",
+    "sensor.unnamed_p304m_tiago_desk_02_current_consumption",
+    "sensor.unnamed_p304m_tiago_desk_03_current_consumption",
+    "sensor.storage_storage_wifi_p304m_current_consumption",
+    "sensor.0x84fd27fffece6dfe_power"
+   ],
+   "type": "custom:button-card",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "devices": [
+     [
+      "Server",
+      "sensor.serverpowermonitor_power",
+      "mdi:server"
+     ],
+     [
+      "Power PC",
+      "sensor.tasmota_energy_power",
+      "mdi:desktop-tower"
+     ],
+     [
+      "Dehumidifier",
+      "sensor.tasmota_energy_power_2",
+      "mdi:air-humidifier"
+     ],
+     [
+      "Garden LAN",
+      "sensor.pumpsafetyoff_energy_power_2",
+      "mdi:lan"
+     ],
+     [
+      "Pump",
+      "sensor.shelly1pmminig3_pump_safety_power",
+      "mdi:water-pump",
+      "Garden LAN"
+     ],
+     [
+      "Tree lights",
+      "sensor.shellydimmer2_c8c9a33cdfe6_power",
+      "mdi:pine-tree",
+      "Garden LAN"
+     ],
+     [
+      "Garden wall lights",
+      "sensor.shellydimmer2_c8c9a33cdf43_power",
+      "mdi:wall-sconce-flat"
+     ],
+     [
+      "Living room plug",
+      "sensor.living_room_plug_power",
+      "mdi:power-socket-uk"
+     ],
+     [
+      "Sofa",
+      "sensor.livingroom_sofa_em_power",
+      "mdi:sofa-outline"
+     ],
+     [
+      "PS5",
+      "sensor.ps5_current_consumption",
+      "mdi:sony-playstation"
+     ],
+     [
+      "Ethernet splitter",
+      "sensor.livingroom_ethernet_spliter_ps5_current_consumption",
+      "mdi:ethernet"
+     ],
+     [
+      "Mini PC",
+      "sensor.livingroom_mini_pc_current_consumption",
+      "mdi:desktop-classic"
+     ],
+     [
+      "Cabinet LEDs",
+      "sensor.livingroom_cabinet_led_current_consumption",
+      "mdi:led-strip-variant"
+     ],
+     [
+      "Tiago desk",
+      "sensor.office_tiago_desk_shelly1pmminig3_power",
+      "mdi:desk"
+     ],
+     [
+      "Tiago bedside devices",
+      "sensor.christmastreeoutside_power",
+      "mdi:power-socket-uk"
+     ],
+     [
+      "Tiago bedside",
+      "sensor.bedroom_main_bedroom_bedside_tiago_power",
+      "mdi:lamp"
+     ],
+     [
+      "Cristiana bedside",
+      "sensor.bedroom_main_bedroom_bedside_cristiana_power",
+      "mdi:lamp"
+     ],
+     [
+      "Coffee machine",
+      "sensor.unnamed_p304m_tiago_desk_01_current_consumption",
+      "mdi:coffee-maker-outline"
+     ],
+     [
+      "Kettle",
+      "sensor.unnamed_p304m_tiago_desk_02_current_consumption",
+      "mdi:kettle"
+     ],
+     [
+      "Mini fridge",
+      "sensor.unnamed_p304m_tiago_desk_03_current_consumption",
+      "mdi:fridge-outline"
+     ],
+     [
+      "Router (storage)",
+      "sensor.storage_storage_wifi_p304m_current_consumption",
+      "mdi:router-wireless"
+     ],
+     [
+      "Garden router plug",
+      "sensor.0x84fd27fffece6dfe_power",
+      "mdi:router-network"
+     ]
+    ]
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Biggest users now"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "sensor.shelly_main_power_meter_channel_1_power",
+   "template": "wm_energy_rank",
+   "type": "custom:button-card",
+   "variables": {
+    "devices": [
+     [
+      "Server",
+      "sensor.serverpowermonitor_power",
+      "mdi:server"
+     ],
+     [
+      "Power PC",
+      "sensor.tasmota_energy_power",
+      "mdi:desktop-tower"
+     ],
+     [
+      "Dehumidifier",
+      "sensor.tasmota_energy_power_2",
+      "mdi:air-humidifier"
+     ],
+     [
+      "Garden LAN",
+      "sensor.pumpsafetyoff_energy_power_2",
+      "mdi:lan"
+     ],
+     [
+      "Pump",
+      "sensor.shelly1pmminig3_pump_safety_power",
+      "mdi:water-pump",
+      "Garden LAN"
+     ],
+     [
+      "Tree lights",
+      "sensor.shellydimmer2_c8c9a33cdfe6_power",
+      "mdi:pine-tree",
+      "Garden LAN"
+     ],
+     [
+      "Garden wall lights",
+      "sensor.shellydimmer2_c8c9a33cdf43_power",
+      "mdi:wall-sconce-flat"
+     ],
+     [
+      "Living room plug",
+      "sensor.living_room_plug_power",
+      "mdi:power-socket-uk"
+     ],
+     [
+      "Sofa",
+      "sensor.livingroom_sofa_em_power",
+      "mdi:sofa-outline"
+     ],
+     [
+      "PS5",
+      "sensor.ps5_current_consumption",
+      "mdi:sony-playstation"
+     ],
+     [
+      "Ethernet splitter",
+      "sensor.livingroom_ethernet_spliter_ps5_current_consumption",
+      "mdi:ethernet"
+     ],
+     [
+      "Mini PC",
+      "sensor.livingroom_mini_pc_current_consumption",
+      "mdi:desktop-classic"
+     ],
+     [
+      "Cabinet LEDs",
+      "sensor.livingroom_cabinet_led_current_consumption",
+      "mdi:led-strip-variant"
+     ],
+     [
+      "Tiago desk",
+      "sensor.office_tiago_desk_shelly1pmminig3_power",
+      "mdi:desk"
+     ],
+     [
+      "Tiago bedside devices",
+      "sensor.christmastreeoutside_power",
+      "mdi:power-socket-uk"
+     ],
+     [
+      "Tiago bedside",
+      "sensor.bedroom_main_bedroom_bedside_tiago_power",
+      "mdi:lamp"
+     ],
+     [
+      "Cristiana bedside",
+      "sensor.bedroom_main_bedroom_bedside_cristiana_power",
+      "mdi:lamp"
+     ],
+     [
+      "Coffee machine",
+      "sensor.unnamed_p304m_tiago_desk_01_current_consumption",
+      "mdi:coffee-maker-outline"
+     ],
+     [
+      "Kettle",
+      "sensor.unnamed_p304m_tiago_desk_02_current_consumption",
+      "mdi:kettle"
+     ],
+     [
+      "Mini fridge",
+      "sensor.unnamed_p304m_tiago_desk_03_current_consumption",
+      "mdi:fridge-outline"
+     ],
+     [
+      "Router (storage)",
+      "sensor.storage_storage_wifi_p304m_current_consumption",
+      "mdi:router-wireless"
+     ],
+     [
+      "Garden router plug",
+      "sensor.0x84fd27fffece6dfe_power",
+      "mdi:router-network"
+     ]
+    ],
+    "count": 10
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "triggers_update": [
+    "sensor.serverpowermonitor_power",
+    "sensor.tasmota_energy_power",
+    "sensor.tasmota_energy_power_2",
+    "sensor.pumpsafetyoff_energy_power_2",
+    "sensor.shelly1pmminig3_pump_safety_power",
+    "sensor.shellydimmer2_c8c9a33cdfe6_power",
+    "sensor.shellydimmer2_c8c9a33cdf43_power",
+    "sensor.living_room_plug_power",
+    "sensor.livingroom_sofa_em_power",
+    "sensor.ps5_current_consumption",
+    "sensor.livingroom_ethernet_spliter_ps5_current_consumption",
+    "sensor.livingroom_mini_pc_current_consumption",
+    "sensor.livingroom_cabinet_led_current_consumption",
+    "sensor.office_tiago_desk_shelly1pmminig3_power",
+    "sensor.christmastreeoutside_power",
+    "sensor.bedroom_main_bedroom_bedside_tiago_power",
+    "sensor.bedroom_main_bedroom_bedside_cristiana_power",
+    "sensor.unnamed_p304m_tiago_desk_01_current_consumption",
+    "sensor.unnamed_p304m_tiago_desk_02_current_consumption",
+    "sensor.unnamed_p304m_tiago_desk_03_current_consumption",
+    "sensor.storage_storage_wifi_p304m_current_consumption",
+    "sensor.0x84fd27fffece6dfe_power"
+   ]
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Totals"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "cards": [
+    {
+     "card_mod": {
+      "style": "ha-card { background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035)) !important; border: none !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05) !important; border-radius: 16px !important; font-family: Inter, 'Helvetica Neue', Roboto, sans-serif; } .name { font-size: 14px !important; font-weight: 300 !important; color: #A1A6B0 !important; } .value { font-size: 30px !important; font-weight: 200 !important; color: #F5F5F7 !important; } .measurement { font-size: 14px !important; color: #A1A6B0 !important; } .icon { display: none; }"
+     },
+     "entity": "sensor.shelly_main_power_meter_channel_1_energy",
+     "name": "Today",
+     "period": {
+      "calendar": {
+       "period": "day"
+      }
+     },
+     "stat_type": "change",
+     "type": "statistic"
+    },
+    {
+     "card_mod": {
+      "style": "ha-card { background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035)) !important; border: none !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05) !important; border-radius: 16px !important; font-family: Inter, 'Helvetica Neue', Roboto, sans-serif; } .name { font-size: 14px !important; font-weight: 300 !important; color: #A1A6B0 !important; } .value { font-size: 30px !important; font-weight: 200 !important; color: #F5F5F7 !important; } .measurement { font-size: 14px !important; color: #A1A6B0 !important; } .icon { display: none; }"
+     },
+     "entity": "sensor.shelly_main_power_meter_channel_1_energy",
+     "name": "Yesterday",
+     "period": {
+      "calendar": {
+       "offset": -1,
+       "period": "day"
+      }
+     },
+     "stat_type": "change",
+     "type": "statistic"
+    },
+    {
+     "card_mod": {
+      "style": "ha-card { background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035)) !important; border: none !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05) !important; border-radius: 16px !important; font-family: Inter, 'Helvetica Neue', Roboto, sans-serif; } .name { font-size: 14px !important; font-weight: 300 !important; color: #A1A6B0 !important; } .value { font-size: 30px !important; font-weight: 200 !important; color: #F5F5F7 !important; } .measurement { font-size: 14px !important; color: #A1A6B0 !important; } .icon { display: none; }"
+     },
+     "entity": "sensor.shelly_main_power_meter_channel_1_energy",
+     "name": "This month",
+     "period": {
+      "calendar": {
+       "period": "month"
+      }
+     },
+     "stat_type": "change",
+     "type": "statistic"
+    }
+   ],
+   "type": "horizontal-stack",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Limits"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "custom_fields": {
+    "seg": {
+     "card": {
+      "cards": [
+       {
+        "entity": "input_number.energy_high_usage_from",
+        "template": "wm_seg_number",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "1.5 kW",
+         "value": 1500
+        }
+       },
+       {
+        "entity": "input_number.energy_high_usage_from",
+        "template": "wm_seg_number",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "2 kW",
+         "value": 2000
+        }
+       },
+       {
+        "entity": "input_number.energy_high_usage_from",
+        "template": "wm_seg_number",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "3 kW",
+         "value": 3000
+        }
+       },
+       {
+        "entity": "input_number.energy_high_usage_from",
+        "template": "wm_seg_number",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "4 kW",
+         "value": 4000
+        }
+       }
+      ],
+      "type": "horizontal-stack"
+     }
+    }
+   },
+   "entity": "input_number.energy_high_usage_from",
+   "template": "wm_choice_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:speedometer",
+    "subtitle": "[[[ return `${Math.round(entity?.state || 0)} W · peach here and on the home page` ]]]",
+    "title": "High usage from"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "custom_fields": {
+    "seg": {
+     "card": {
+      "cards": [
+       {
+        "entity": "input_number.energy_normal_usage_from",
+        "template": "wm_seg_number",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "250 W",
+         "value": 250
+        }
+       },
+       {
+        "entity": "input_number.energy_normal_usage_from",
+        "template": "wm_seg_number",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "500 W",
+         "value": 500
+        }
+       },
+       {
+        "entity": "input_number.energy_normal_usage_from",
+        "template": "wm_seg_number",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "750 W",
+         "value": 750
+        }
+       },
+       {
+        "entity": "input_number.energy_normal_usage_from",
+        "template": "wm_seg_number",
+        "type": "custom:button-card",
+        "variables": {
+         "label": "1 kW",
+         "value": 1000
+        }
+       }
+      ],
+      "type": "horizontal-stack"
+     }
+    }
+   },
+   "entity": "input_number.energy_normal_usage_from",
+   "template": "wm_choice_row",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:speedometer-medium",
+    "subtitle": "[[[ return `${Math.round(entity?.state || 0)} W · below this shows as Low` ]]]",
+    "title": "Normal usage from"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_nav",
+   "type": "custom:button-card",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ],
+ "icon": "mdi:leaf",
+ "layout": {
+  "grid-gap": "16px",
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "height": "auto",
+  "margin": 0,
+  "padding": "44px 40px 140px",
+  "place-content": "start center"
+ },
+ "path": "energy",
+ "title": "Energy",
+ "type": "custom:grid-layout"
+}

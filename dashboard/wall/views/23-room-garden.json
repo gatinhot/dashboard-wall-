@@ -1,0 +1,204 @@
+{
+ "title": "Garden",
+ "path": "room-garden",
+ "icon": "mdi:flower-outline",
+ "type": "custom:grid-layout",
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "layout": {
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "grid-gap": "16px",
+  "padding": "44px 40px 140px",
+  "margin": 0,
+  "place-content": "start center",
+  "height": "auto"
+ },
+ "cards": [
+  {
+   "type": "custom:button-card",
+   "template": "wm_room_head",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "triggers_update": [
+    "light.shellydimmer2_garden_wall",
+    "light.shellydimmer2_tree_lights",
+    "light.garden_lights_olivetree",
+    "weather.forecast_t_c_homeassistant"
+   ],
+   "variables": {
+    "title": "Garden",
+    "icon": "mdi:flower-outline",
+    "subtitle": "[[[ const parts = []; const ts = states['weather.forecast_t_c_homeassistant']; const tv = ts ? parseFloat(ts.entity_id.startsWith('weather.') ? ts.attributes.temperature : ts.state) : NaN; if (!isNaN(tv)) parts.push(Math.round(tv) + '°'); const hs = states['none']; const hv = hs ? parseFloat(hs.state) : NaN; if (!isNaN(hv)) parts.push(Math.round(hv) + '% humidity'); const ids = ['light.shellydimmer2_garden_wall', 'light.shellydimmer2_tree_lights', 'light.garden_lights_olivetree']; const n = ids.filter(i => states[i] && states[i].state === 'on').length; if (ids.length) parts.push(n ? `<span style='color:#FFDC96'>${n} light${n > 1 ? 's' : ''} on</span>` : 'Lights off'); return parts.length ? parts.join(' · ') : 'Nothing set up here yet'; ]]]"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Lights"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.shellydimmer2_garden_wall",
+   "variables": {
+    "name": "Garden wall",
+    "icon": "mdi:wall-sconce-flat-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.shellydimmer2_tree_lights",
+   "variables": {
+    "name": "Tree lights",
+    "icon": "mdi:pine-tree"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_light_dim",
+   "entity": "light.garden_lights_olivetree",
+   "variables": {
+    "name": "Olive tree",
+    "icon": "mdi:tree-outline"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Music"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_media_room",
+   "entity": "media_player.garden_speaker_moode_upnp",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "name": "Garden speaker"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Scenes"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_scene_tile",
+   "entity": "scene.garden_full",
+   "variables": {
+    "name": "Garden full",
+    "icon": "mdi:flower"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Devices"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_toggle_row",
+   "entity": "switch.garden_sprinklers_corners",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "title": "Sprinklers, corners",
+    "subtitle": "Corner zones",
+    "icon": "mdi:sprinkler-variant"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_toggle_row",
+   "entity": "switch.garden_sprinklers_middle",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "title": "Sprinklers, middle",
+    "subtitle": "Middle zone",
+    "icon": "mdi:sprinkler-variant"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Sensors"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_text_tile",
+   "entity": "sensor.0xa4c138a2cd4bb91f_soil_moisture",
+   "triggers_update": [],
+   "variables": {
+    "name": "Soil moisture",
+    "icon": "mdi:water-percent",
+    "text": "[[[ const x = parseFloat(entity?.state); return isNaN(x) ? 'Unavailable' : Math.round(x) + '%'; ]]]",
+    "tone": "[[[ const x = parseFloat(entity?.state); return !isNaN(x) && x < 20 ? 'peach' : 'none'; ]]]"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_label",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "text": "Go to"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_link_row",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   },
+   "variables": {
+    "title": "Cameras",
+    "subtitle": "Garden camera",
+    "icon": "mdi:cctv"
+   },
+   "tap_action": {
+    "action": "navigate",
+    "navigation_path": "/11-west-mead-wall-beta/cctv",
+    "haptic": "light"
+   }
+  },
+  {
+   "type": "custom:button-card",
+   "template": "wm_nav",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ]
+}

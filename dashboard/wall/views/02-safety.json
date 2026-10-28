@@ -1,0 +1,200 @@
+{
+ "background": "radial-gradient(120% 60% at 0% 0%, rgba(120,88,52,0.30) 0%, rgba(11,11,13,0) 55%), radial-gradient(90% 40% at 100% 100%, rgba(90,70,45,0.14) 0%, rgba(11,11,13,0) 60%), #0B0B0D",
+ "cards": [
+  {
+   "entity": "alarm_control_panel.office",
+   "template": "wm_page_title",
+   "triggers_update": [
+    "binary_sensor.frontdoor_sensor_contact",
+    "binary_sensor.livingroom_sensor_door",
+    "binary_sensor.office_sensor_door",
+    "binary_sensor.storage_sensor_door_contact",
+    "binary_sensor.kitchen_sensor_window",
+    "binary_sensor.bathroom_sensor_window_contact",
+    "binary_sensor.bedroom_sensor_window_01_contact",
+    "binary_sensor.bedroom_sensor_window_02_contact"
+   ],
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:shield-outline",
+    "subtitle": "[[[ const ids = ['binary_sensor.frontdoor_sensor_contact', 'binary_sensor.livingroom_sensor_door', 'binary_sensor.office_sensor_door', 'binary_sensor.storage_sensor_door_contact', 'binary_sensor.kitchen_sensor_window', 'binary_sensor.bathroom_sensor_window_contact', 'binary_sensor.bedroom_sensor_window_01_contact', 'binary_sensor.bedroom_sensor_window_02_contact']; const n = ids.filter(i => states[i] && states[i].state === 'on').length; return n ? `<span style='color:#FFCC99'>${n} ${n > 1 ? 'doors or windows' : 'door or window'} open</span>` : 'All doors and windows are closed'; ]]]",
+    "title": "Security"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "alarm_control_panel.office",
+   "template": "wm_alarm_hero",
+   "type": "custom:button-card",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Doors"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "binary_sensor.frontdoor_sensor_contact",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:door",
+    "name": "Front door"
+   }
+  },
+  {
+   "entity": "binary_sensor.livingroom_sensor_door",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:door",
+    "name": "Living room"
+   }
+  },
+  {
+   "entity": "binary_sensor.office_sensor_door",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:door",
+    "name": "Office"
+   }
+  },
+  {
+   "entity": "binary_sensor.storage_sensor_door_contact",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:door",
+    "name": "Storage"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Windows"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "binary_sensor.kitchen_sensor_window",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:window-closed-variant",
+    "name": "Kitchen"
+   }
+  },
+  {
+   "entity": "binary_sensor.bathroom_sensor_window_contact",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:window-closed-variant",
+    "name": "Bathroom"
+   }
+  },
+  {
+   "entity": "binary_sensor.bedroom_sensor_window_01_contact",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:window-closed-variant",
+    "name": "Bedroom 1"
+   }
+  },
+  {
+   "entity": "binary_sensor.bedroom_sensor_window_02_contact",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:window-closed-variant",
+    "name": "Bedroom 2"
+   }
+  },
+  {
+   "template": "wm_label",
+   "type": "custom:button-card",
+   "variables": {
+    "text": "Car"
+   },
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  },
+  {
+   "entity": "lock.wr67xfs_lock",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "alert": "coral",
+    "icon": "mdi:car-key",
+    "kind": "lock",
+    "name": "Lock"
+   }
+  },
+  {
+   "entity": "binary_sensor.wr67xfs_deck_lid",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "alert": "coral",
+    "icon": "mdi:car-back",
+    "name": "Boot"
+   }
+  },
+  {
+   "entity": "binary_sensor.wr67xfs_windows_closed",
+   "template": "wm_status_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "alert": "coral",
+    "icon": "mdi:car-door",
+    "kind": "closed_on",
+    "name": "Windows"
+   }
+  },
+  {
+   "entity": "sensor.wr67xfs_fuel_level",
+   "template": "wm_value_tile",
+   "type": "custom:button-card",
+   "variables": {
+    "icon": "mdi:gas-station-outline",
+    "low": 15,
+    "name": "Fuel",
+    "unit": "%"
+   }
+  },
+  {
+   "template": "wm_nav",
+   "type": "custom:button-card",
+   "view_layout": {
+    "grid-column": "1 / -1"
+   }
+  }
+ ],
+ "icon": "mdi:shield-outline",
+ "layout": {
+  "grid-gap": "16px",
+  "grid-template-columns": "repeat(2, minmax(0, 312px))",
+  "height": "auto",
+  "margin": 0,
+  "padding": "44px 40px 140px",
+  "place-content": "start center"
+ },
+ "path": "safety",
+ "title": "Safety",
+ "type": "custom:grid-layout"
+}
