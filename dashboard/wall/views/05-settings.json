@@ -158,7 +158,7 @@
    "template": "wm_footer",
    "type": "custom:button-card",
    "variables": {
-    "text": "11 West Mead Wall v021 · BETA · 28 October 2026"
+    "text": "11 West Mead Wall v022 · BETA · 28 October 2026"
    },
    "view_layout": {
     "grid-column": "1 / -1"
