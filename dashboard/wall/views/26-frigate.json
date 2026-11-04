@@ -1,0 +1,31 @@
+{
+  "title": "Frigate",
+  "path": "frigate",
+  "icon": "mdi:cctv",
+  "type": "custom:grid-layout",
+  "background": "#0B0B0D",
+  "layout": {
+    "grid-template-columns": "100%",
+    "grid-gap": "0",
+    "padding": "0 0 96px",
+    "margin": 0,
+    "height": "auto"
+  },
+  "cards": [
+    {
+      "type": "custom:button-card",
+      "template": "wm_ingress_frame",
+      "variables": {
+        "slug": "ccab4aaf_frigate-proxy",
+        "view": "frigate",
+        "title": "Frigate",
+        "zoom": 1,
+        "unload_ms": 2000
+      }
+    },
+    {
+      "type": "custom:button-card",
+      "template": "wm_nav"
+    }
+  ]
+}

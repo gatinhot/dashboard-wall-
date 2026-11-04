@@ -660,7 +660,7 @@
       "tap_action": {
         "action": "navigate",
         "haptic": "light",
-        "navigation_path": "/ccab4aaf_frigate-proxy"
+        "navigation_path": "/11-west-mead-wall-beta/frigate"
       },
       "template": "wm_link_row",
       "type": "custom:button-card",

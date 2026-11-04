@@ -718,7 +718,7 @@
     },
     "wm_nav_item": {
       "custom_fields": {
-        "bar": "[[[ const a = (location.pathname.split('/').pop() === variables.view || (variables.view === 'home' && location.pathname.split('/').pop().startsWith('room-'))); return `<div style='width:64px;height:2px;border-radius:2px;margin-top:12px;background:${a ? '#AADCC8' : 'transparent'};box-shadow:${a ? '0 0 8px rgba(170,220,200,0.5)' : 'none'}'></div>`; ]]]"
+        "bar": "[[[ const a = (location.pathname.split('/').pop() === variables.view || String(variables.also || '').split(',').filter(Boolean).includes(location.pathname.split('/').pop()) || (variables.view === 'home' && location.pathname.split('/').pop().startsWith('room-'))); return `<div style='width:64px;height:2px;border-radius:2px;margin-top:12px;background:${a ? '#AADCC8' : 'transparent'};box-shadow:${a ? '0 0 8px rgba(170,220,200,0.5)' : 'none'}'></div>`; ]]]"
       },
       "show_icon": true,
       "styles": {
@@ -740,13 +740,14 @@
             "width": "28px"
           },
           {
-            "color": "[[[ return (location.pathname.split('/').pop() === variables.view || (variables.view === 'home' && location.pathname.split('/').pop().startsWith('room-'))) ? '#AADCC8' : 'rgba(201,204,211,0.34)' ]]]"
+            "color": "[[[ return (location.pathname.split('/').pop() === variables.view || String(variables.also || '').split(',').filter(Boolean).includes(location.pathname.split('/').pop()) || (variables.view === 'home' && location.pathname.split('/').pop().startsWith('room-'))) ? '#AADCC8' : 'rgba(201,204,211,0.34)' ]]]"
           }
         ]
       },
       "template": "wm_base",
       "variables": {
-        "view": ""
+        "view": "",
+        "also": ""
       }
     },
     "wm_idle": {
@@ -1022,7 +1023,8 @@
             "template": "wm_nav_item",
             "type": "custom:button-card",
             "variables": {
-              "view": "cctv"
+              "view": "cctv",
+              "also": "frigate"
             }
           }
         }
@@ -3089,6 +3091,95 @@
       "custom_fields": {
         "t": "[[[ return variables.text ]]]"
       }
+    },
+    "wm_ingress_frame": {
+      "template": "wm_base",
+      "variables": {
+        "slug": "",
+        "view": "",
+        "title": "Add-on",
+        "zoom": 1,
+        "unload_ms": 3000
+      },
+      "custom_fields": {
+        "frame": "[[[ const SLUG = variables.slug; const VIEW = variables.view; const self = this; const st = window['__wmIng_' + SLUG] || (window['__wmIng_' + SLUG] = {}); st.host = self; const onView = () => { let p = window.location.pathname; if (p.endsWith('/')) p = p.slice(0, -1); return p.endsWith('/' + VIEW); }; const fr = () => { const h = st.host; return h && h.isConnected && h.shadowRoot && h.shadowRoot.querySelector('#ing-frame'); }; if (!st.wired) { st.wired = true; const chk = () => { clearTimeout(st.t); const f = fr(); if (!f) return; if (onView()) { if ((f.getAttribute('src') || '') === 'about:blank' && st.url) f.setAttribute('src', st.url); } else { st.t = setTimeout(() => { const g = fr(); if (g && !onView() && g.getAttribute('src') !== 'about:blank') g.setAttribute('src', 'about:blank'); }, Number(variables.unload_ms) || 3000); } }; window.addEventListener('location-changed', () => setTimeout(chk, 80)); window.addEventListener('popstate', () => setTimeout(chk, 80)); } const sup = (endpoint, method, data) => hass.callWS(Object.assign({ type: 'supervisor/api', endpoint, method }, data ? { data } : {})); const setCookie = (s) => { document.cookie = `ingress_session=${s};path=/api/hassio_ingress/;SameSite=Strict` + (window.location.protocol === 'https:' ? ';Secure' : ''); }; if (!window.__wmIngSess) { window.__wmIngSess = (async () => { let s = (await sup('/ingress/session', 'post')).session; setCookie(s); setInterval(async () => { try { await sup('/ingress/validate_session', 'post', { session: s }); } catch (e) { try { s = (await sup('/ingress/session', 'post')).session; setCookie(s); } catch (e2) {} } }, 60000); return s; })(); } if (!st.p) { st.p = window.__wmIngSess.then(() => sup(`/addons/${SLUG}/info`, 'get')).then((i) => { st.url = i.ingress_url; return st.url; }); st.p.catch((e) => { st.err = (e && (e.message || e.code)) || String(e); }); } st.p.then((u) => setTimeout(() => { const f = fr(); if (f && onView() && !(f.getAttribute('src') || '').startsWith(u)) f.setAttribute('src', u); }, 0)).catch(() => setTimeout(() => { const f = fr(); if (f) f.setAttribute('srcdoc', `<body style='background:#0B0B0D;color:#A1A6B0;font:300 16px Inter,Roboto,sans-serif;display:flex;align-items:center;justify-content:center;height:90vh;margin:0'>${variables.title} could not be opened: ${st.err}</body>`); }, 0)); const z = Number(variables.zoom) || 1; return `<iframe id='ing-frame' src='${onView() && st.url ? st.url : 'about:blank'}' title='${variables.title}' allow='autoplay; fullscreen' style='position:absolute;top:0;left:0;display:block;width:${100 / z}%;height:${100 / z}%;transform:scale(${z});transform-origin:0 0;border:0;background:#0B0B0D'></iframe>`; ]]]"
+      },
+      "styles": {
+        "card": [
+          {
+            "position": "fixed"
+          },
+          {
+            "top": "0"
+          },
+          {
+            "left": "0"
+          },
+          {
+            "width": "100vw"
+          },
+          {
+            "height": "calc(100vh - 94px)"
+          },
+          {
+            "margin": "0"
+          },
+          {
+            "border-radius": "0"
+          },
+          {
+            "overflow": "hidden"
+          },
+          {
+            "z-index": "3"
+          },
+          {
+            "background": "#0B0B0D"
+          },
+          {
+            "pointer-events": "none"
+          },
+          {
+            "--ha-ripple-color": "transparent"
+          }
+        ],
+        "custom_fields": {
+          "frame": [
+            {
+              "position": "relative"
+            },
+            {
+              "width": "100%"
+            },
+            {
+              "height": "100%"
+            },
+            {
+              "overflow": "hidden"
+            },
+            {
+              "pointer-events": "auto"
+            }
+          ]
+        },
+        "grid": [
+          {
+            "grid-template-areas": "\"frame\""
+          },
+          {
+            "grid-template-columns": "100%"
+          },
+          {
+            "grid-template-rows": "100%"
+          },
+          {
+            "width": "100%"
+          },
+          {
+            "height": "100%"
+          }
+        ]
+      }
     }
   },
   "views": [
@@ -4720,7 +4811,7 @@
           "template": "wm_footer",
           "type": "custom:button-card",
           "variables": {
-            "text": "11 West Mead Wall v024 · BETA · 3 November 2026"
+            "text": "11 West Mead Wall v025 · BETA · 4 November 2026"
           },
           "view_layout": {
             "grid-column": "1 / -1"
@@ -5409,7 +5500,7 @@
           "tap_action": {
             "action": "navigate",
             "haptic": "light",
-            "navigation_path": "/ccab4aaf_frigate-proxy"
+            "navigation_path": "/11-west-mead-wall-beta/frigate"
           },
           "template": "wm_link_row",
           "type": "custom:button-card",
@@ -7940,6 +8031,37 @@
           "view_layout": {
             "grid-column": "1 / -1"
           }
+        }
+      ]
+    },
+    {
+      "title": "Frigate",
+      "path": "frigate",
+      "icon": "mdi:cctv",
+      "type": "custom:grid-layout",
+      "background": "#0B0B0D",
+      "layout": {
+        "grid-template-columns": "100%",
+        "grid-gap": "0",
+        "padding": "0 0 96px",
+        "margin": 0,
+        "height": "auto"
+      },
+      "cards": [
+        {
+          "type": "custom:button-card",
+          "template": "wm_ingress_frame",
+          "variables": {
+            "slug": "ccab4aaf_frigate-proxy",
+            "view": "frigate",
+            "title": "Frigate",
+            "zoom": 1,
+            "unload_ms": 2000
+          }
+        },
+        {
+          "type": "custom:button-card",
+          "template": "wm_nav"
         }
       ]
     }
