@@ -3176,5 +3176,234 @@
         }
       ]
     }
+  },
+  "wm_pc_power": {
+    "template": "wm_base",
+    "show_icon": true,
+    "icon": "mdi:power",
+    "variables": {
+      "on_script": "",
+      "off_script": ""
+    },
+    "tap_action": {
+      "action": "perform-action",
+      "perform_action": "script.turn_on",
+      "haptic": "medium",
+      "target": {
+        "entity_id": "[[[ const v = entity?.state; const on = !!v && !['unavailable', 'unknown', 'none'].includes(String(v)); return on ? variables.off_script : variables.on_script; ]]]"
+      }
+    },
+    "styles": {
+      "card": [
+        {
+          "width": "64px"
+        },
+        {
+          "height": "64px"
+        },
+        {
+          "border-radius": "50%"
+        },
+        {
+          "transition": "background 200ms ease"
+        },
+        {
+          "background": "[[[ const v = entity?.state; const on = !!v && !['unavailable', 'unknown', 'none'].includes(String(v)); return on ? 'radial-gradient(circle at 50% 30%, rgba(170,220,200,0.30), rgba(170,220,200,0.08) 72%)' : 'radial-gradient(circle at 50% 28%, rgba(255,255,255,0.085), rgba(255,255,255,0.03) 75%)'; ]]]"
+        },
+        {
+          "border": "[[[ const v = entity?.state; const on = !!v && !['unavailable', 'unknown', 'none'].includes(String(v)); return on ? '1px solid rgba(170,220,200,0.45)' : '1px solid rgba(255,255,255,0.07)'; ]]]"
+        },
+        {
+          "box-shadow": "[[[ const v = entity?.state; const on = !!v && !['unavailable', 'unknown', 'none'].includes(String(v)); return on ? 'inset 0 0 22px rgba(170,220,200,0.30)' : 'none'; ]]]"
+        }
+      ],
+      "grid": [
+        {
+          "grid-template-areas": "\"i\""
+        }
+      ],
+      "icon": [
+        {
+          "width": "28px"
+        },
+        {
+          "color": "[[[ const v = entity?.state; const on = !!v && !['unavailable', 'unknown', 'none'].includes(String(v)); return on ? '#AADCC8' : 'rgba(201,204,211,0.34)'; ]]]"
+        }
+      ]
+    }
+  },
+  "wm_pc_desk": {
+    "template": "wm_base",
+    "show_icon": true,
+    "show_name": true,
+    "show_state": true,
+    "icon": "mdi:desk",
+    "name": "Desk",
+    "tap_action": {
+      "action": "toggle",
+      "haptic": "light"
+    },
+    "hold_action": {
+      "action": "more-info"
+    },
+    "styles": {
+      "card": [
+        {
+          "height": "56px"
+        },
+        {
+          "border-radius": "28px"
+        },
+        {
+          "padding": "0 22px"
+        },
+        {
+          "transition": "background 200ms ease"
+        },
+        {
+          "background": "[[[ return entity && entity.state === 'on' ? 'linear-gradient(180deg, rgba(126,196,170,0.36), rgba(84,150,128,0.20))' : 'rgba(255,255,255,0.05)'; ]]]"
+        },
+        {
+          "opacity": "[[[ return entity && entity.state !== 'unavailable' ? 1 : 0.4; ]]]"
+        }
+      ],
+      "grid": [
+        {
+          "grid-template-areas": "\"i n s\""
+        },
+        {
+          "grid-template-columns": "28px 1fr auto"
+        },
+        {
+          "column-gap": "14px"
+        },
+        {
+          "align-items": "center"
+        }
+      ],
+      "icon": [
+        {
+          "width": "24px"
+        },
+        {
+          "color": "[[[ return entity && entity.state === 'on' ? '#AADCC8' : 'rgba(201,204,211,0.34)'; ]]]"
+        }
+      ],
+      "name": [
+        {
+          "justify-self": "start"
+        },
+        {
+          "font-size": "17px"
+        },
+        {
+          "color": "[[[ return entity && entity.state === 'on' ? '#F5F5F7' : '#A1A6B0'; ]]]"
+        }
+      ],
+      "state": [
+        {
+          "justify-self": "end"
+        },
+        {
+          "font-size": "15px"
+        },
+        {
+          "color": "[[[ return entity && entity.state === 'on' ? '#AADCC8' : '#A1A6B0'; ]]]"
+        }
+      ]
+    }
+  },
+  "wm_pc_card": {
+    "template": "wm_glass",
+    "variables": {
+      "name": "PC",
+      "icon": "mdi:desktop-tower-monitor",
+      "on_script": "",
+      "off_script": "",
+      "desk_switch": ""
+    },
+    "tap_action": {
+      "action": "none"
+    },
+    "hold_action": {
+      "action": "more-info"
+    },
+    "custom_fields": {
+      "head": "[[[ const v = entity?.state; const on = !!v && !['unavailable', 'unknown', 'none'].includes(String(v)); const run = id => !!id && states[id]?.state === 'on'; const st = run(variables.on_script) ? 'starting' : run(variables.off_script) ? 'stopping' : on ? 'on' : 'off'; const m = { starting: ['Starting…', '#FFCC99', 1], stopping: ['Shutting down…', '#FFCC99', 1], on: ['Running', '#AADCC8', 1], off: ['Off', '#A1A6B0', 0] }[st]; const ic = st === 'on' ? 'rgba(170,220,200,0.68)' : st === 'off' ? 'rgba(201,204,211,0.34)' : 'rgba(255,204,153,0.8)'; return `<div style='display:flex;justify-content:space-between;align-items:center'><span style='display:flex;align-items:center;gap:14px;font-size:20px'><ha-icon icon='${variables.icon}' style='--mdc-icon-size:28px;color:${ic}'></ha-icon>${variables.name}</span><span style='display:flex;align-items:center;gap:8px;font-size:15px;color:${m[1]}'><span style='width:8px;height:8px;border-radius:50%;background:${st === 'off' ? 'rgba(255,255,255,0.22)' : m[1]};box-shadow:${m[2] ? '0 0 8px ' + m[1] : 'none'}'></span>${m[0]}</span></div>`; ]]]",
+      "cpu": "[[[ const v = parseFloat(entity?.state); const ok = Number.isFinite(v); const p = ok ? Math.max(0, Math.min(100, v)) : 0; const c = !ok ? 'rgba(255,255,255,0.25)' : p >= 90 ? '#FFCC99' : '#AADCC8'; return `<div style='opacity:${ok ? 1 : 0.45}'><div style='display:flex;justify-content:space-between;font-size:15px;color:#A1A6B0'><span>CPU usage</span><span style='color:${ok ? '#D8DAE0' : '#A1A6B0'}'>${ok ? Math.round(p) + '%' : '—'}</span></div><div style='margin-top:10px;height:3px;border-radius:3px;background:rgba(255,255,255,0.08);overflow:hidden'><div style='width:${p}%;height:100%;background:${c}'></div></div></div>`; ]]]",
+      "pwr": {
+        "card": {
+          "type": "custom:button-card",
+          "template": "wm_pc_power",
+          "entity": "[[[ return entity?.entity_id ]]]",
+          "variables": {
+            "on_script": "[[[ return variables.on_script ]]]",
+            "off_script": "[[[ return variables.off_script ]]]"
+          }
+        }
+      },
+      "desk": {
+        "card": {
+          "type": "custom:button-card",
+          "template": "wm_pc_desk",
+          "entity": "[[[ return variables.desk_switch || 'none' ]]]"
+        }
+      }
+    },
+    "styles": {
+      "card": [
+        {
+          "padding": "22px 24px"
+        },
+        {
+          "background": "[[[ const v = entity?.state; const on = !!v && !['unavailable', 'unknown', 'none'].includes(String(v)); const run = id => !!id && states[id]?.state === 'on'; const busy = run(variables.on_script) || run(variables.off_script); if (busy) return 'radial-gradient(140% 120% at 92% 0%, rgba(255,204,153,0.15) 0%, rgba(255,204,153,0.04) 50%, rgba(255,255,255,0.04) 85%)'; if (on) return 'radial-gradient(140% 120% at 92% 0%, rgba(170,220,200,0.15) 0%, rgba(170,220,200,0.04) 50%, rgba(255,255,255,0.04) 85%)'; return 'linear-gradient(160deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.035) 100%)'; ]]]"
+        }
+      ],
+      "custom_fields": {
+        "head": [
+          {
+            "width": "100%"
+          }
+        ],
+        "cpu": [
+          {
+            "width": "100%"
+          },
+          {
+            "margin-top": "16px"
+          }
+        ],
+        "pwr": [
+          {
+            "justify-self": "end"
+          },
+          {
+            "align-self": "center"
+          }
+        ],
+        "desk": [
+          {
+            "width": "100%"
+          },
+          {
+            "margin-top": "20px"
+          }
+        ]
+      },
+      "grid": [
+        {
+          "grid-template-areas": "\"head pwr\" \"cpu pwr\" \"desk desk\""
+        },
+        {
+          "grid-template-columns": "minmax(0, 1fr) 64px"
+        },
+        {
+          "column-gap": "20px"
+        },
+        {
+          "align-items": "center"
+        }
+      ]
+    }
   }
 }

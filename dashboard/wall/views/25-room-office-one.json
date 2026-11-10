@@ -164,6 +164,36 @@
         "grid-column": "1 / -1"
       },
       "variables": {
+        "text": "Computer"
+      }
+    },
+    {
+      "type": "custom:button-card",
+      "template": "wm_pc_card",
+      "entity": "sensor.tiago_powerpc_cpuload",
+      "view_layout": {
+        "grid-column": "1 / -1"
+      },
+      "triggers_update": [
+        "script.office_pc_turn_on",
+        "script.office_pc_turn_off",
+        "switch.office_tiago_desk_shelly1pmminig3"
+      ],
+      "variables": {
+        "name": "Power PC",
+        "icon": "mdi:desktop-tower-monitor",
+        "on_script": "script.office_pc_turn_on",
+        "off_script": "script.office_pc_turn_off",
+        "desk_switch": "switch.office_tiago_desk_shelly1pmminig3"
+      }
+    },
+    {
+      "type": "custom:button-card",
+      "template": "wm_label",
+      "view_layout": {
+        "grid-column": "1 / -1"
+      },
+      "variables": {
         "text": "Curtains"
       }
     },
